@@ -1,168 +1,320 @@
+```yaml
 openapi: 3.0.3
+
 info:
-  title: Projeto integrado - catalago de marmitas fitness - Baratie fit
-  description: API destinada para criação de uma pagina web 
-  termsOfService: http://swagger.io/terms/
+  title: Projeto Integrado - Baratie Fit
+  description: API do Sistema de Informações Nutricionais
   version: 1.0
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
+
 servers:
-  - url: http://
+  - url: http://localhost:3000
+
 paths:
-  /v1/senai/locadora:
+
+  /v1/baratie/login:
     post:
       tags:
-        - Filme
-      summary: Adiciona um novo Filme
-      description: Adiciona um novo Filme no banco de dados
+        - Autenticacao
+      summary: Realiza login do administrador
+      description: Permite autenticação utilizando e-mail ou nome de usuário e senha
       requestBody:
-        description: JSON contendo os dados do anovo aluno a ser inserido no sistema
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Aluno'
-        required: true
-      responses:
-        '201':
-          description: Successful operation
-        '400':
-          description: Invalid input
-        '500':
-          description: Error model
-        '500':
-          description: Error controller
-    get:
-      tags:
-        - aluno
-      summary: Lista todos os alunos
-      description: Listagem de todos os alunos registrados no sistema
+              $ref: '#/components/schemas/Login'
+
       responses:
         '200':
-          description: successful operation
+          description: Login realizado com sucesso
+        '401':
+          description: Credenciais inválidas
+        '500':
+          description: Erro interno
+
+  /v1/baratie/recuperar-senha:
+    post:
+      tags:
+        - Autenticacao
+      summary: Solicita recuperação de senha
+      description: Envia um e-mail para recuperação de senha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecuperacaoSenha'
+
+      responses:
+        '200':
+          description: Solicitação enviada
+        '404':
+          description: Usuário não encontrado
+
+  /v1/baratie/cadastro/marmitas:
+    post:
+      tags:
+        - Refeicao
+      summary: Cadastra uma refeição
+      description: Cadastro de refeições realizado por administradores
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refeicao'
+
+      responses:
+        '201':
+          description: Refeição cadastrada com sucesso
+        '400':
+          description: Dados inválidos
+        '401':
+          description: Não autorizado
+
+    get:
+      tags:
+        - Refeicao
+      summary: Lista todas as refeições
+      description: Retorna todas as refeições cadastradas
+
+      responses:
+        '200':
+          description: Operação realizada com sucesso
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Aluno'          
-           
+                  $ref: '#/components/schemas/Refeicao'
+
         '404':
-          description: Not Found
-  /v1/aluno/{id}:
+          description: Nenhuma refeição encontrada
+
+  /v1/baratie/marmita/{id}:
     get:
       tags:
-        - aluno
-      summary: Busca um aluno prlo ID
-      description: Retorna um aluno pelo ID
+        - Refeicao
+      summary: Busca refeição por ID
+
       parameters:
         - name: id
           in: path
-          description: ID of pet to return
           required: true
           schema:
             type: integer
-            format: int64
+
       responses:
         '200':
-          description: successful operation
+          description: Refeição encontrada
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Aluno'          
-        '400':
-          description: Invalid ID supplied
+                $ref: '#/components/schemas/Refeicao'
+
         '404':
-          description: Pet not found
+          description: Refeição não encontrada
+
     put:
       tags:
-        - aluno
-      summary: Update an existing pet
-      description: Update an existing pet by Id
+        - Refeicao
+      summary: Atualiza refeição
+
       parameters:
         - name: id
           in: path
-          description: ID of pet to return
           required: true
           schema:
             type: integer
-            format: int64
+
       requestBody:
-        description: Update an existent pet in the store
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Aluno'
-        required: true
+              $ref: '#/components/schemas/Refeicao'
+
       responses:
         '200':
-          description: Successful operation
-        '400':
-          description: Invalid ID supplied
+          description: Refeição atualizada
         '404':
-          description: Pet not found
-       
+          description: Refeição não encontrada
+
     delete:
       tags:
-        - aluno
-      summary: Delete aluno
-      description: Excluir um aluno
+        - Refeicao
+      summary: Remove refeição
+
       parameters:
         - name: id
           in: path
-          description: ID of pet to return
           required: true
           schema:
             type: integer
-            format: int64
+
       responses:
         '200':
-          description: successful operation
-        '400':
-          description: Invalid ID supplied
+          description: Refeição removida
         '404':
-          description: Pet not found
-  
+          description: Refeição não encontrada
+
+  /v1/baratie/pesquisa:
+    get:
+      tags:
+        - Consulta
+      summary: Pesquisa refeições pelo nome
+
+      parameters:
+        - name: nome
+          in: query
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Pesquisa realizada com sucesso
+
+  /v1/baratie/filtro:
+    get:
+      tags:
+        - Consulta
+      summary: Filtra refeições
+
+      parameters:
+        - name: calorias
+          in: query
+          schema:
+            type: number
+
+        - name: proteinas
+          in: query
+          schema:
+            type: number
+
+        - name: carboidratos
+          in: query
+          schema:
+            type: number
+
+        - name: lipideos
+          in: query
+          schema:
+            type: number
+
+        - name: ordem
+          in: query
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+
+      responses:
+        '200':
+          description: Filtro realizado com sucesso
+
+  /v1/baratie/restricoes:
+    get:
+      tags:
+        - Restricao
+      summary: Lista refeições por restrições alimentares
+
+      parameters:
+        - name: lactose
+          in: query
+          schema:
+            type: boolean
+
+        - name: gluten
+          in: query
+          schema:
+            type: boolean
+
+      responses:
+        '200':
+          description: Consulta realizada com sucesso
 
 components:
+
   schemas:
-    Filme:
-      required:
-        - nome
+
+    Login:
       type: object
-      properties:
-        id:
-          type: integer
-        nome:
-          type: string
-        sinopse:
-          type: string
-        data_lancamento:
-          type: string
-        duracao:
-          type: string
-        valor:
-          type: string
-        avaliacao:
-          type: interger
-    Filme:
       required:
-        - nome
-      type: object
+        - usuario
+        - senha
+
       properties:
-        id:
-          type: integer
-        nome:
+        usuario:
           type: string
-        celular:
+
+        senha:
           type: string
+
+    RecuperacaoSenha:
+      type: object
+
+      required:
+        - email
+
+      properties:
         email:
           type: string
-  requestBodies:
-    Aluno:
-      description: Objeto que deve ser enviado no Body das requisicoes
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Filme'
-    
+
+    RestricaoAlimentar:
+      type: object
+
+      properties:
+        id:
+          type: integer
+
+        nome:
+          type: string
+
+        descricao:
+          type: string
+
+    Refeicao:
+      type: object
+
+      required:
+        - nome_alimento
+        - ingredientes
+        - carboidratos
+        - proteinas
+        - lipideos
+
+      properties:
+
+        id:
+          type: integer
+
+        nome_alimento:
+          type: string
+
+        ingredientes:
+          type: string
+
+        possui_gluten:
+          type: boolean
+
+        possui_lactose:
+          type: boolean
+
+        carboidratos:
+          type: number
+
+        proteinas:
+          type: number
+
+        lipideos:
+          type: number
+
+        calorias:
+          type: number
+
+        restricao_alimentar:
+          $ref: '#/components/schemas/RestricaoAlimentar'
+```
