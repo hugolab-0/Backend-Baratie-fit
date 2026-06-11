@@ -1,9 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Projeto de Filmes DS2M SENAI Jandira - Professor Marcel
-  description: API destinada para controlar Filmes
+  title: Projeto integrado - catalago de marmitas fitness - Baratie fit
+  description: API destinada para criação de uma pagina web 
   termsOfService: http://swagger.io/terms/
-  version: 1.0.4.26
+  version: 1.0
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
