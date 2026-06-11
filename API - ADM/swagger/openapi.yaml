@@ -1,320 +1,304 @@
-
 openapi: 3.0.3
 
 info:
-  title: Projeto Integrado - Baratie Fit
-  description: API do Sistema de Informações Nutricionais
-  version: 1.0
+title: Projeto Integrado - Baratie Fit - Administrador
+description: API administrativa do Sistema de Informações Nutricionais
+version: 1.0.0
 
 servers:
-  - url: http://localhost:3000
+
+* url: http://localhost:3000
 
 paths:
 
-  /v1/baratie/login:
-    post:
-      tags:
-        - Autenticacao
-      summary: Realiza login do administrador
-      description: Permite autenticação utilizando e-mail ou nome de usuário e senha
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Login'
+/v1/baratie/login:
+post:
+tags:
+- Autenticacao
 
-      responses:
-        '200':
-          description: Login realizado com sucesso
-        '401':
-          description: Credenciais inválidas
-        '500':
-          description: Erro interno
+```
+  summary: Realiza login do administrador
+  description: Permite autenticação utilizando e-mail ou nome de usuário e senha.
 
-  /v1/baratie/recuperar-senha:
-    post:
-      tags:
-        - Autenticacao
-      summary: Solicita recuperação de senha
-      description: Envia um e-mail para recuperação de senha
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RecuperacaoSenha'
+  requestBody:
+    required: true
 
-      responses:
-        '200':
-          description: Solicitação enviada
-        '404':
-          description: Usuário não encontrado
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Login'
 
-  /v1/baratie/cadastro/marmitas:
-    post:
-      tags:
-        - Refeicao
-      summary: Cadastra uma refeição
-      description: Cadastro de refeições realizado por administradores
+  responses:
+    '200':
+      description: Login realizado com sucesso
 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
+    '401':
+      description: Credenciais inválidas
+
+    '500':
+      description: Erro interno do servidor
+```
+
+/v1/baratie/recuperar-senha:
+post:
+tags:
+- Autenticacao
+
+```
+  summary: Solicita recuperação de senha
+  description: Envia um e-mail para redefinição de senha.
+
+  requestBody:
+    required: true
+
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/RecuperacaoSenha'
+
+  responses:
+    '200':
+      description: Solicitação enviada com sucesso
+
+    '404':
+      description: Usuário não encontrado
+```
+
+/v1/baratie/marmitas:
+post:
+tags:
+- Refeicao
+
+```
+  summary: Cadastra uma refeição
+  description: Permite cadastrar uma nova refeição.
+
+  requestBody:
+    required: true
+
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Refeicao'
+
+  responses:
+    '201':
+      description: Refeição cadastrada com sucesso
+
+    '400':
+      description: Dados inválidos
+
+    '401':
+      description: Não autorizado
+
+get:
+  tags:
+    - Refeicao
+
+  summary: Lista todas as refeições
+  description: Retorna todas as refeições cadastradas.
+
+  responses:
+    '200':
+      description: Lista retornada com sucesso
+
+      content:
+        application/json:
+          schema:
+            type: array
+
+            items:
               $ref: '#/components/schemas/Refeicao'
 
-      responses:
-        '201':
-          description: Refeição cadastrada com sucesso
-        '400':
-          description: Dados inválidos
-        '401':
-          description: Não autorizado
+    '404':
+      description: Nenhuma refeição encontrada
+```
 
-    get:
-      tags:
-        - Refeicao
-      summary: Lista todas as refeições
-      description: Retorna todas as refeições cadastradas
+/v1/baratie/marmitas/{id}:
+get:
+tags:
+- Refeicao
 
-      responses:
-        '200':
-          description: Operação realizada com sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Refeicao'
+```
+  summary: Busca refeição por ID
 
-        '404':
-          description: Nenhuma refeição encontrada
+  parameters:
+    - name: id
+      in: path
+      required: true
 
-  /v1/baratie/marmita/{id}:
-    get:
-      tags:
-        - Refeicao
-      summary: Busca refeição por ID
+      schema:
+        type: integer
 
-      parameters:
-        - name: id
-          in: path
-          required: true
+  responses:
+    '200':
+      description: Refeição encontrada
+
+      content:
+        application/json:
           schema:
-            type: integer
+            $ref: '#/components/schemas/Refeicao'
 
-      responses:
-        '200':
-          description: Refeição encontrada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Refeicao'
+    '404':
+      description: Refeição não encontrada
 
-        '404':
-          description: Refeição não encontrada
+put:
+  tags:
+    - Refeicao
 
-    put:
-      tags:
-        - Refeicao
-      summary: Atualiza refeição
+  summary: Atualiza refeição
+  description: Atualiza os dados de uma refeição existente.
 
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+  parameters:
+    - name: id
+      in: path
+      required: true
 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Refeicao'
+      schema:
+        type: integer
 
-      responses:
-        '200':
-          description: Refeição atualizada
-        '404':
-          description: Refeição não encontrada
+  requestBody:
+    required: true
 
-    delete:
-      tags:
-        - Refeicao
-      summary: Remove refeição
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Refeicao'
 
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+  responses:
+    '200':
+      description: Refeição atualizada com sucesso
 
-      responses:
-        '200':
-          description: Refeição removida
-        '404':
-          description: Refeição não encontrada
+    '400':
+      description: Dados inválidos
 
-  /v1/baratie/pesquisa:
-    get:
-      tags:
-        - Consulta
-      summary: Pesquisa refeições pelo nome
+    '404':
+      description: Refeição não encontrada
 
-      parameters:
-        - name: nome
-          in: query
-          required: true
-          schema:
-            type: string
+delete:
+  tags:
+    - Refeicao
 
-      responses:
-        '200':
-          description: Pesquisa realizada com sucesso
+  summary: Remove refeição
+  description: Exclui uma refeição do sistema.
 
-  /v1/baratie/filtro:
-    get:
-      tags:
-        - Consulta
-      summary: Filtra refeições
+  parameters:
+    - name: id
+      in: path
+      required: true
 
-      parameters:
-        - name: calorias
-          in: query
-          schema:
-            type: number
+      schema:
+        type: integer
 
-        - name: proteinas
-          in: query
-          schema:
-            type: number
+  responses:
+    '200':
+      description: Refeição removida com sucesso
 
-        - name: carboidratos
-          in: query
-          schema:
-            type: number
-
-        - name: lipideos
-          in: query
-          schema:
-            type: number
-
-        - name: ordem
-          in: query
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-
-      responses:
-        '200':
-          description: Filtro realizado com sucesso
-
-  /v1/baratie/restricoes:
-    get:
-      tags:
-        - Restricao
-      summary: Lista refeições por restrições alimentares
-
-      parameters:
-        - name: lactose
-          in: query
-          schema:
-            type: boolean
-
-        - name: gluten
-          in: query
-          schema:
-            type: boolean
-
-      responses:
-        '200':
-          description: Consulta realizada com sucesso
+    '404':
+      description: Refeição não encontrada
+```
 
 components:
 
-  schemas:
+schemas:
 
-    Login:
-      type: object
-      required:
-        - usuario
-        - senha
+```
+Login:
+  type: object
 
-      properties:
-        usuario:
-          type: string
+  required:
+    - usuario
+    - senha
 
-        senha:
-          type: string
+  properties:
 
-    RecuperacaoSenha:
-      type: object
+    usuario:
+      type: string
+      example: admin@baratiefit.com
 
-      required:
-        - email
+    senha:
+      type: string
+      format: password
+      example: Admin123
 
-      properties:
-        email:
-          type: string
+RecuperacaoSenha:
+  type: object
 
-    RestricaoAlimentar:
-      type: object
+  required:
+    - email
 
-      properties:
-        id:
-          type: integer
+  properties:
 
-        nome:
-          type: string
+    email:
+      type: string
+      format: email
+      example: admin@baratiefit.com
 
-        descricao:
-          type: string
+RestricaoAlimentar:
+  type: object
 
-    Refeicao:
-      type: object
+  properties:
 
-      required:
-        - nome_alimento
-        - ingredientes
-        - carboidratos
-        - proteinas
-        - lipideos
+    id:
+      type: integer
+      example: 1
 
-      properties:
+    nome:
+      type: string
+      example: Intolerância à Lactose
 
-        id:
-          type: integer
+    descricao:
+      type: string
+      example: Refeição inadequada para pessoas com intolerância à lactose.
 
-        nome_alimento:
-          type: string
+Refeicao:
+  type: object
 
-        ingredientes:
-          type: string
+  required:
+    - nome_alimento
+    - ingredientes
+    - carboidratos
+    - proteinas
+    - lipideos
 
-        possui_gluten:
-          type: boolean
+  properties:
 
-        possui_lactose:
-          type: boolean
+    id:
+      type: integer
+      example: 1
 
-        carboidratos:
-          type: number
+    nome_alimento:
+      type: string
+      example: Frango Grelhado com Arroz Integral
 
-        proteinas:
-          type: number
+    ingredientes:
+      type: string
+      example: Frango grelhado, arroz integral, cenoura e brócolis
 
-        lipideos:
-          type: number
+    possui_gluten:
+      type: boolean
+      example: false
 
-        calorias:
-          type: number
+    possui_lactose:
+      type: boolean
+      example: false
 
-        restricao_alimentar:
-          $ref: '#/components/schemas/RestricaoAlimentar'
+    carboidratos:
+      type: number
+      example: 35
 
+    proteinas:
+      type: number
+      example: 42
+
+    lipideos:
+      type: number
+      example: 12
+
+    calorias:
+      type: number
+      example: 408
+
+    restricao_alimentar:
+      $ref: '#/components/schemas/RestricaoAlimentar'
+```
