@@ -1,7 +1,7 @@
 /*******************************************************************************************************
  * 
  * Objetivo: Arquivo responsável pelo CRUD no Banco de dados MySQL na tabela 
- * tipo_refeição
+ * Alimento
  * Data: 11/06/2026
  * Autor: Geovane
  * Versão: 1.0
@@ -19,11 +19,27 @@ const knexConex = knex(knexConfig.development)
 
 
 //Função para inserir dados na tabela de tipo de Refeições
-const insertNewTipoRefeicao = async function(refeicao) {
+const insertNewAlimento = async function(alimento) {
     
     try {
-        let sql =   `insert into tbl_tipo_refeicao (nome)
-                    values('${refeicao.nome}');`
+        let sql =   `insert into tbl_alimento (
+                    nome, 
+                    descricao, 
+                    carboidratos_g,
+                    proteinas_g,
+                    lipidios_g,
+                    fibras_g,
+                    acucar_adicionado_g,
+                    gorduras_trans_g,
+                    gorduras_saturadas_g
+                    )
+            values (    '${alimento.nome}',
+                        '${alimento.descricao}',
+                        if('${alimento.carboidratos_g}' = '', null, '${alimento.carboidratos_g}',
+                        '${alimento.proteinas_g}',
+                        '${alimento.lipidios_g}',
+                        '${alimento.fibras_g}',
+                        );`
 
 
     //Executar o ScriptSQL no Banco de Dados

@@ -10,7 +10,7 @@
 const message_config = require('../modulo/configMesssages.js')
 
 //Import do arquivo DAO para fazer o CRUD de tipos de refeições no banco de dados
-const tipoRefeicaoDAO = require('../../model/DAO/tipo_refeicao/tipo_refeicao.js')
+const tipoRefeicaoDAO = require('../../model/DAO/alimento/alimento.js.js')
 
 
 //Função para inserir um novo tipo de Refeição
