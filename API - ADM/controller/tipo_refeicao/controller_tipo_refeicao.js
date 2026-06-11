@@ -55,6 +55,8 @@ const inserirRefeicao = async function(refeicao, contentType) {
     }
 }
 
+
+//Função para validar Dados
 const validarDados = async function(refeicao) {
     
     //Criando clone do objeto JSOn paea manipular a sua estrutura local sem modificar a estrutura original
