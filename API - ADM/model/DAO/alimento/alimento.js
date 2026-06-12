@@ -18,7 +18,7 @@ const knexConfig = require('../../database_config_knex/knexFile.js')
 const knexConex = knex(knexConfig.development)
 
 
-//Função para inserir dados na tabela de tipo de Refeições
+//Função para inserir dados na tabela de Alimento
 const insertNewAlimento = async function(alimento) {
     
     try {

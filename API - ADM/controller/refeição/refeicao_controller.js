@@ -1,8 +1,19 @@
+/*********************************************************************************************************
+ * Objetivo: Arquivo responsavel pela validação , tratamento e
+ *      manipulacao de dados para o CRUD de tipo de refeições
+ * Data: 2026-06-12
+ * Autor: Geovane
+ * Versão: 1.0
+ *********************************************************************************************************/
+
+//Import do arquivo de padronização de mensagens
 const message = require('../modulo/configMesssages.js');
 
+//Import do arquivo DAO para fazer o CRUD de tipos de refeições no banco de dados
 const refeicaoDAO = require('../../model/DAO/refeição/refeicao.js');
 
-const insertRefeicao = async function (refeicao, contentType) {
+//Função para inserir uma nova Refeição
+const inserirRefeicao = async function (refeicao, contentType) {
     let messageJson = JSON.parse(JSON.stringify(message));
 
     try {
@@ -46,6 +57,156 @@ const insertRefeicao = async function (refeicao, contentType) {
     }
 };
 
+//Função para Atulizar um Alimento
+const atualizarRefeicao = async function(refeicao, id, contentType) {
+
+    //Criando clone do objeto JSOn para manipular a sua estrutura local sem modificar a estrutura original
+    let message = JSON.parse(JSON.stringify(message_config))
+      
+   try {
+       //Validação do contente type para receber apenas Json
+       //Consistente e funciona com charset
+       if(String(contentType).includes('application/json')){
+   
+           //Validação para o ID correto
+           let resultBuscarID = await buscar(id)
+   
+           if(resultBuscarID.status){
+               let validar = await validarDados(refeicao)
+   
+               //Validação de campos obrigatórios para a atualização (Body)
+               if(!validar){
+                   //Adiciono o atributo ID da refeição no Json para ser enviado ao DAO
+                   refeicao.id = id
+   
+   
+                   let result = await refeicaoDAO.updateRefeicao(refeicao)
+   
+                   if(result){
+                       message.DEFAULT_MESSAGE.status = message.SUCESS_UPDATED_ITEM.status
+                       message.DEFAULT_MESSAGE.status_code = message_config.SUCESS_UPDATED_ITEM.status_code
+                       message.DEFAULT_MESSAGE.message = message.SUCESS_UPDATED_ITEM.message
+                       message.DEFAULT_MESSAGE.response = refeicao
+   
+                       return message.DEFAULT_MESSAGE //200 (Atualizado)
+                   }else{
+                       return message.ERROR_INTERNAL_SERVER_MODEL //500 (Model)
+                   }
+   
+               }else{
+                   return validar //400
+               }
+           }else{
+               return resultBuscarID //400 ou 404 ou 500
+           }
+       }else{
+           return message.ERROR_CONTENT_TYPE //415
+       }
+   } catch (error) {
+       console.log(error)
+       return message.ERROR_INTERNAL_SERVER_CONTROLLER //500
+   }
+}
+
+//Função para listar todos as Refeições criadas
+const listarRefeicoes = async function() {
+ 
+    let message = JSON.parse(JSON.stringify(message_config))
+
+    try {
+
+        let result = await refeicaoDAO.selectAllRefeicao()
+
+        if (result) {
+            if (result.length > 0) {
+                message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
+                message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
+                message.DEFAULT_MESSAGE.response.count = result.length
+                message.DEFAULT_MESSAGE.response.alimento = result
+                
+                return message.DEFAULT_MESSAGE //200
+
+            }else{
+                return message.ERROR_NOT_FOUND //404
+            }
+
+        }else {
+            return message.ERROR_INTERNAL_SERVER_MODEL //500 (model)
+        }
+        
+    } catch (error) {
+        console.log(error);
+        
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER //500
+        
+    }
+}
+
+//Função para buscar Refeição via ID
+const buscarRefeicao = async function(id) {
+    
+    let message = JSON.parse(JSON.stringify(message_config))
+    
+    try {
+    
+        if(id === undefined || id === null || id === '' || isNaN(id)){
+            message.ERROR_BAD_RESQUEST.field = '[ID] Inválido'
+
+            return message.ERROR_BAD_RESQUEST //400
+
+        }else{
+            let result = await refeicaoDAO.selectByIdRefeicao(id)
+    
+            if(result){
+                if(result.length > 0){
+                    message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
+                    message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
+                    message.DEFAULT_MESSAGE.response = result
+    
+                    return message.DEFAULT_MESSAGE //200
+    
+                }else{
+                    return message.ERROR_NOT_FOUND //404
+                }
+            }else{
+                return message.ERROR_INTERNAL_SERVER_MODEL //500 (Model)
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER //500
+    }
+}
+
+//Função para excluir uma Refeição registrada
+const excluirRefeicao = async function(id) {
+    let message = JSON.parse(JSON.stringify(message_config))
+       
+           try {
+               //Validação do erro 400 e 404
+               let resultBuscarID = await buscarRefeicao(id)
+       
+               //Validação para verificar se o status é verdadeiro (se existe o alimento)
+               if(resultBuscarID.status){
+                   //Chamar função do DAO para excluir o alimento
+                   let result = await refeicaoDAO.deleteRefeicao(id)
+       
+                   if(result){
+                       return message.SUCESS_DELETED_ITEM //200 (Registro exluído)
+                   }else {
+                       return message.ERROR_INTERNAL_SERVER_MODEL //500 (model)
+                   }
+               }else {
+                   return resultBuscarID //400 ou 404
+               }
+       
+       
+           } catch (error) {
+               return message.ERROR_INTERNAL_SERVER_CONTROLLER //500
+           }
+}
+
+//Função para validar os dados
 const validarRefeicao = function (refeicao) {
     let messageJson = JSON.parse(JSON.stringify(message));
 
@@ -89,5 +250,10 @@ const validarRefeicao = function (refeicao) {
 };
 
 module.exports = {
-    insertRefeicao
+    inserirRefeicao,
+    atualizarRefeicao,
+    listarRefeicoes,
+    buscarRefeicao,
+    excluirRefeicao,
+    validarRefeicao
 };
