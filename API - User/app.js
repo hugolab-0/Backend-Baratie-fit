@@ -70,6 +70,16 @@ app.use("/v1/baratie/restricao", cors(), restricaoRouter)
 
 
 
+/* SESSÃO DAS CATEGORIAS DOS ALIMENTOS */
+
+//importando o arquivo onde estão as rotas das categorias dos alimentos
+const categoriaAlimentoRouter = require("./routes/categoria_alimento_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/categoria/alimento", cors(), categoriaAlimentoRouter)
+
+
+
 
 //iniciando a API para receber requisições
 app.listen(8080, function(){ //decidindo a porta para saída do conteúdo
