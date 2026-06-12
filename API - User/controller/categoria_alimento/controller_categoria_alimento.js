@@ -1,5 +1,5 @@
 /********************************************************************************************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD dos tipos de refeição.
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD das categorias dos alimentos.
  * Data: 12/06/2026
  * Autor: Lucas Dias Brnadão Kolle
  * Versão: 1.0.06.26
@@ -9,13 +9,13 @@
 const config_message = require("../modulo/config_messages.js")
 
 //importando arquivo de relacionado do DAO (MODEL)
-const tipoRefeicaoDAO = require("../../model/DAO/tipo_refeicao/tipo_refeicao.js")
+const categoriaAlimentoDAO = require("../../model/DAO/categoria_alimento/categoria_alimento.js")
 const { json } = require("body-parser")
 
-/* FUNÇÕES PARA O CRUD DOS TIPOS DE REFEIÇÕES */
+/* FUNÇÕES PARA O CRUD DAS CATEGORIAS DOS ALIMENTOS*/
 
-//função para retornar todos os tipos de refeição cadastrados no banco de dados
-const listarTipoRefeicao = async function(){
+//função para retornar todas as categorias dos alimentos 
+const listarCategoriaAlimento = async function(){
 
     //clonando a variável de mensagens para não modificar a original
     let message = JSON.parse(JSON.stringify(config_message))
@@ -25,7 +25,7 @@ const listarTipoRefeicao = async function(){
     try {
 
         //chama a função do DAO para retornar a lista de todos os filmes
-        let result = await tipoRefeicaoDAO.selectAllTipoRefeicao()
+        let result = await categoriaAlimentoDAO.selectAllCategoriaAlimento()
 
         //conferindo retorno do resulto para decidir qual mensagem mandar
         if(result){
@@ -37,7 +37,7 @@ const listarTipoRefeicao = async function(){
                 message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
                 message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
                 message.DEFAULT_MESSAGE.response.count = result.length
-                message.DEFAULT_MESSAGE.response.tipoRefeicao = result
+                message.DEFAULT_MESSAGE.response.categoriaAlimento = result
 
                 return message.DEFAULT_MESSAGE //retorna o cabeçalho com o "result" que contém os dados do filme
 
@@ -55,8 +55,8 @@ const listarTipoRefeicao = async function(){
     }
 }
 
-//função para buscar um tipo de refeição pelo id
-const buscarTipoRefeicaoId = async function(id){
+//função para buscar um publico alvo pelo id
+const buscarCategoriaAlimento = async function(id){
 
     //clonando a variável de mensagens para não modificar a original
     let message = JSON.parse(JSON.stringify(config_message))
@@ -71,7 +71,7 @@ const buscarTipoRefeicaoId = async function(id){
         
         //se o id estiver no formato correto ele ennvia pro DAO
         }else{
-            let result = await tipoRefeicaoDAO.selectByIdTipoRefeicao(id) //enviando o id pro DAO concluir o script
+            let result = await categoriaAlimentoDAO.selectByIdCategoriaAlimento(id) //enviando o id pro DAO concluir o script
 
             //se o resultado estiver algo ele continua o programa
             if(result){
@@ -82,7 +82,7 @@ const buscarTipoRefeicaoId = async function(id){
                     //editando cabeçalho
                     message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
-                    message.DEFAULT_MESSAGE.response.tipoRefeicao = result
+                    message.DEFAULT_MESSAGE.response.categoriaAlimento = result
 
                     return message.DEFAULT_MESSAGE //200
                 }else{
@@ -102,6 +102,6 @@ const buscarTipoRefeicaoId = async function(id){
 
 /* EXPORTANDO FUNÇÕES */
 module.exports = {
-    listarTipoRefeicao,
-    buscarTipoRefeicaoId
+    listarCategoriaAlimento,
+    buscarCategoriaAlimento
 }
