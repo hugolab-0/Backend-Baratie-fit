@@ -219,11 +219,12 @@ alter table tbl_adm
 alter table tbl_refeicao_alimento
     add column id_refeicao int not null,
     add constraint FK_REFEICAO_REFEICAOALIMENTO
-        foreign key(id_refeicao)
-        references tbl_refeicao(id),
+        foreign 
+  references tbl_refeicao(id),
     add column id_alimento int not null,
     add constraint FK_ALIMENTO_REFEICAOALIMENTO
         foreign key(id_alimento)
         references tbl_alimento(id);
         
-######### FIM #########
+######### FIM #######
+######### FIM ##########

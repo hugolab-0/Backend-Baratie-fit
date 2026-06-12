@@ -19,6 +19,10 @@ const controllerAlimento = require('./controller/alimento/alimento.js')
 
 const alimentoRoutes = require('./rotas/alimento.routes.js')
 
+const controllerRefeicao = require('./controller/refeição/refeicao_controller.js')
+
+const refeicaoRoutes = require('./rotas/refeicao/refeicao_rota.js')
+
 // ======================================================================
 // CONFIGURAÇÃO DA API
 // ======================================================================
@@ -53,6 +57,9 @@ app.use(cors(corsOptions))
 
 // Cadastrar filme
 app.use('/v1/baratiefit/alimento', cors(),  alimentoRoutes)
+
+
+app.use('/v1/baratiefit/refeicao', cors(), refeicaoRoutes)
 
 
 
