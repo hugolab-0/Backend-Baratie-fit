@@ -55,7 +55,7 @@ const listarTipoRefeicao = async function(){
     }
 }
 
-//função para buscar um filme pelo id
+//função para buscar um tipo de refeição pelo id
 const buscarTipoRefeicaoId = async function(id){
 
     //clonando a variável de mensagens para não modificar a original

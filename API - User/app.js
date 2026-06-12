@@ -51,11 +51,21 @@ app.use("/v1/baratie/tipo/refeicao", cors(), tipoRefeicaoRouter)
 
 /* SESSÃO DOS PUBLICOS ALVOS */
 
-//importando o arquivo onde estão as rotas do publico
+//importando o arquivo onde estão as rotas do publico alvo
 const publicoAlvoRouter = require("./routes/publico_alvo_routes.js")
 
 //definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
 app.use("/v1/baratie/publico/alvo", cors(), publicoAlvoRouter)
+
+
+
+/* SESSÃO DAS RESTRIÇÕES */
+
+//importando o arquivo onde estão as rotas das restrições
+const restricaoRouter = require("./routes/restricao_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/restricao", cors(), restricaoRouter)
 
 
 
