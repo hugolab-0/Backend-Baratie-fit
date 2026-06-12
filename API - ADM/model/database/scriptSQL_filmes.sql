@@ -25,7 +25,8 @@ create table tbl_refeicao(
     nome varchar(100) not null,
     descricao       text,
     modo_preparo    text,
-    apoio_decisao   text
+    apoio_decisao   text,
+    img varchar(255) not null
 );
 
 -- Cria a tabela de refeicao relacionada com alimento
@@ -39,17 +40,27 @@ create table tbl_adm(
     id int not null primary key auto_increment,
     nome  varchar(100) not null,
     email varchar(255) not null,
-    senha varchar(255) not null,
+    senha varchar(512) not null,
     ultimo_acesso datetime
 );
 
--- Cria a tabela de recuperacao de senha
-create table tbl_recuperacao_senha(
-    id int not null primary key auto_increment,
-    token varchar(255),
-    expira_em datetime,
-    usado tinyint(1)
+-- Insert da tabela de ADM
+insert into tbl_adm (
+    nome,
+    email,
+    senha,
+    ultimo_acesso,
+    id_nivel_acesso
+)
+values (
+    'Administrador',
+    'admin@baratiefit.com',
+    '123456',
+    now(),
+    2
 );
+
+select * from tbl_adm;
 
 #########   TABELAS DE DADOS ESTATICOS   #########
 -- Cria a tabela de tipo_refeicao
@@ -177,6 +188,14 @@ insert into tbl_nivel_acesso(nivel)
 values
 ("Root"), ("Administrador"), ("Nutricionista"), ("Editor");
 
+select * from tbl_nivel_acesso;
+
+select * from tbl_categoria_alimento where id = 7;
+
+select * from tbl_enquadramento;
+
+select * from tbl_adm;
+
 #########   ALTER TABLES   #########   
 -- Adiciona a FK na tabela de alimento e cria as relacoes
 alter table tbl_alimento
@@ -214,6 +233,7 @@ alter table tbl_adm
     add constraint FK_NIVEL_ACESSO_ADM
         foreign key(id_nivel_acesso)
         references tbl_nivel_acesso(id);
+
         
 -- Adiciona as FK na tabela de refeição_alimento e faz as relações
 alter table tbl_refeicao_alimento
