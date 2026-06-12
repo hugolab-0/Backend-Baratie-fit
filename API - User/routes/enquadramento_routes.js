@@ -1,5 +1,5 @@
 /********************************************************************************************************************************************************************************************
- * Objetivo: Arquivo responsável pelo controle de rotas dos publicos alvos.
+ * Objetivo: Arquivo responsável pelo controle de rotas dos enquadramentos.
  * Data: 12/06/2026
  * Autor: Lucas Dias Brandão Kolle
  * Versão: 1.0.06.26
@@ -17,16 +17,16 @@ const bodyParserJSON = bodyParser.json()
 const router = express.Router()
 
 //importando controller referente aos publicos alvos, para pode enviar os dados para serem processados
-const controllerPublicoAlvo  = require("../controller/publico_alvo/controller_publico_alvo.js")
+const controllerEnquadramento  = require("../controller/enquadramento/controller_enquadramento.js")
 
 
-/* CRUD DA TABELA DOS PUBLICOS ALVOS */
+/* CRUD DA TABELA DAS CATEGORIAS DE ENQUADRAMENTO */
 
-//listar todos os tipos de refeição
+//listar todas os enquadramentos
 router.get("/", async function(request, response){
 
     //fazendo requisição
-    let result = await controllerPublicoAlvo.listarPublicoAlvo()
+    let result = await controllerEnquadramento.listarEnquadramento()
 
     //enviando resposta
     response.status(result.status_code)
@@ -34,14 +34,14 @@ router.get("/", async function(request, response){
 
 })
 
-//buscasr um tipo de refeição pelo ID
+//buscasr um enquadramento
 router.get("/:id", async function(request, response){
 
     //recebendo o id
-    let idPublicoAlvo = request.params.id
+    let idEnquadramento = request.params.id
 
     //enviando para o banco
-    let result = await controllerPublicoAlvo.buscarPublicoAlvo(idPublicoAlvo)
+    let result = await controllerEnquadramento.buscarEnquadramentoId(idEnquadramento)
 
     //enviando resposta
     response.status(result.status_code)

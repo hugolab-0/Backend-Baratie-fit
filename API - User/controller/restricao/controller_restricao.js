@@ -1,5 +1,5 @@
 /********************************************************************************************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD dos publicos alvos.
+ * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD das restrições.
  * Data: 12/06/2026
  * Autor: Lucas Dias Brnadão Kolle
  * Versão: 1.0.06.26
@@ -9,13 +9,13 @@
 const config_message = require("../modulo/config_messages.js")
 
 //importando arquivo de relacionado do DAO (MODEL)
-const publicoAlvoDAO = require("../../model/DAO/publico_alvo/publico_alvo.js")
+const restricaoDAO = require("../../model/DAO/restricao/restricao.js")
 const { json } = require("body-parser")
 
-/* FUNÇÕES PARA O CRUD DO PUBLICO ALVO */
+/* FUNÇÕES PARA O CRUD DAS RESTRIÇÕES */
 
-//função para retornar todos os publicos alvos
-const listarPublicoAlvo = async function(){
+//função para retornar todos as restrições cadastrados no banco de dados
+const listarRestricao = async function(){
 
     //clonando a variável de mensagens para não modificar a original
     let message = JSON.parse(JSON.stringify(config_message))
@@ -25,7 +25,7 @@ const listarPublicoAlvo = async function(){
     try {
 
         //chama a função do DAO para retornar a lista de todos os filmes
-        let result = await publicoAlvoDAO.selectAllPublicoAlvo()
+        let result = await restricaoDAO.selectAllRestricao()
 
         //conferindo retorno do resulto para decidir qual mensagem mandar
         if(result){
@@ -37,7 +37,7 @@ const listarPublicoAlvo = async function(){
                 message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
                 message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
                 message.DEFAULT_MESSAGE.response.count = result.length
-                message.DEFAULT_MESSAGE.response.publicoAlvo = result
+                message.DEFAULT_MESSAGE.response.restricao = result
 
                 return message.DEFAULT_MESSAGE //retorna o cabeçalho com o "result" que contém os dados do filme
 
@@ -55,8 +55,8 @@ const listarPublicoAlvo = async function(){
     }
 }
 
-//função para buscar um publico alvo pelo id
-const buscarPublicoAlvo = async function(id){
+//função para buscar uma restrição
+const buscarRestricaoId = async function(id){
 
     //clonando a variável de mensagens para não modificar a original
     let message = JSON.parse(JSON.stringify(config_message))
@@ -71,7 +71,7 @@ const buscarPublicoAlvo = async function(id){
         
         //se o id estiver no formato correto ele ennvia pro DAO
         }else{
-            let result = await publicoAlvoDAO.selectByIdPublicoAlvo(id) //enviando o id pro DAO concluir o script
+            let result = await restricaoDAO.selectByIdRestricao(id) //enviando o id pro DAO concluir o script
 
             //se o resultado estiver algo ele continua o programa
             if(result){
@@ -82,7 +82,7 @@ const buscarPublicoAlvo = async function(id){
                     //editando cabeçalho
                     message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
                     message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
-                    message.DEFAULT_MESSAGE.response.publicoAlvo = result
+                    message.DEFAULT_MESSAGE.response.restricao = result
 
                     return message.DEFAULT_MESSAGE //200
                 }else{
@@ -102,6 +102,6 @@ const buscarPublicoAlvo = async function(id){
 
 /* EXPORTANDO FUNÇÕES */
 module.exports = {
-    listarPublicoAlvo,
-    buscarPublicoAlvo
+    listarRestricao,
+    buscarRestricaoId
 }

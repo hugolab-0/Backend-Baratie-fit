@@ -22,26 +22,34 @@ const knexConex = knex(knexConfig.development)
 const insertNewAlimento = async function(alimento) {
     
     try {
-        let sql =   `insert into tbl_alimento (
-                    nome, 
-                    descricao, 
-                    carboidratos_g,
-                    proteinas_g,
-                    lipidios_g,
-                    fibras_g,
-                    acucar_adicionado_g,
-                    gorduras_trans_g,
-                    gorduras_saturadas_g
-                    )
-            values (    '${alimento.nome}',
-                        '${alimento.descricao}',
-                        if('${alimento.carboidratos_g}' = '', null, '${alimento.carboidratos_g}'),
-                        if('${alimento.proteinas_g}' = '', null, '${alimento.proteinas_g}'),
-                        if('${alimento.lipidios_g}' = '', null, '${alimento.lipidios_g}'),
-                        if('${alimento.fibras_g}' = '', null, '${alimento.fibras_g}'),
-                        if('${alimento.acucar_adicionado_g}' = '', null, '${alimento.acucar_adicionado_g}'),
-                        if('${alimento.gorduras_trans_g}' = '', null, '${alimento.gorduras_trans_g}'),
-                        if('${alimento.gorduras_saturadas_g}' = '', null, '${alimento.gorduras_saturadas_g}'));`
+        let sql = `insert into tbl_alimento (
+            nome,
+            descricao,
+            carboidratos_g,
+            proteinas_g,
+            lipidios_g,
+            fibras_g,
+            acucar_adicionado_g,
+            gorduras_trans_g,
+            gorduras_saturadas_g,
+            id_categoria,
+            id_adm,
+            id_enquadramento
+        )
+        values (
+                '${alimento.nome}',
+                '${alimento.descricao}',
+                '${alimento.carboidratos_g}',
+                '${alimento.proteinas_g}',
+                '${alimento.lipidios_g}',
+                '${alimento.fibras_g}',
+                '${alimento.acucar_adicionado_g}',
+                '${alimento.gorduras_trans_g}',
+                '${alimento.gorduras_saturadas_g}',
+                '${alimento.id_categoria}',
+                '${alimento.id_adm}',
+                '${alimento.id_enquadramento}'
+        );`
 
 
     //Executar o ScriptSQL no Banco de Dados
@@ -73,8 +81,11 @@ const updateAlimento = async function(alimento) {
         fibras_g =                  '${alimento.fibras_g}',
         acucar_adicionado_g =       '${alimento.acucar_adicionado_g}',
         gorduras_trans_g =          '${alimento.gorduras_trans_g}',
-        gorduras_saturadas_g =      '${alimento.gorduras_saturadas_g}'
-        where id =                  '${alimento.id}';`
+        gorduras_saturadas_g =      '${alimento.gorduras_saturadas_g}',
+        id_categoria =              '${alimento.id_categoria}',
+        id_adm =                    '${alimento.id_adm}',
+        id_enquadramento =          '${alimento.id_enquadramento}'
+        where id =                  ${alimento.id};`
 
         //Executa o script no BD
         let result = await knexConex.raw(sql)

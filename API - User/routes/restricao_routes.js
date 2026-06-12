@@ -1,5 +1,5 @@
 /********************************************************************************************************************************************************************************************
- * Objetivo: Arquivo responsável pelo controle de rotas dos publicos alvos.
+ * Objetivo: Arquivo responsável pelo controle de rotas das restrições.
  * Data: 12/06/2026
  * Autor: Lucas Dias Brandão Kolle
  * Versão: 1.0.06.26
@@ -16,17 +16,17 @@ const bodyParserJSON = bodyParser.json()
 //cria um objeto de rota para o arquivo
 const router = express.Router()
 
-//importando controller referente aos publicos alvos, para pode enviar os dados para serem processados
-const controllerPublicoAlvo  = require("../controller/publico_alvo/controller_publico_alvo.js")
+//importando os arquivos da controller, para pode enviar os dados para serem processados
+const controllerRestricao = require("../controller/restricao/controller_restricao.js")
 
 
-/* CRUD DA TABELA DOS PUBLICOS ALVOS */
+/* CRUD DA TABELA DE RESTRIÇÕES */
 
-//listar todos os tipos de refeição
+//listar todos as restrições
 router.get("/", async function(request, response){
 
     //fazendo requisição
-    let result = await controllerPublicoAlvo.listarPublicoAlvo()
+    let result = await controllerRestricao.listarRestricao()
 
     //enviando resposta
     response.status(result.status_code)
@@ -34,14 +34,14 @@ router.get("/", async function(request, response){
 
 })
 
-//buscasr um tipo de refeição pelo ID
+//buscasr uma restrição pelo id
 router.get("/:id", async function(request, response){
 
     //recebendo o id
-    let idPublicoAlvo = request.params.id
+    let idRestricao = request.params.id
 
     //enviando para o banco
-    let result = await controllerPublicoAlvo.buscarPublicoAlvo(idPublicoAlvo)
+    let result = await controllerRestricao.buscarRestricaoId(idRestricao)
 
     //enviando resposta
     response.status(result.status_code)
