@@ -40,11 +40,24 @@ app.use(cors(corsOption))
 
 /* SESSÃO DOS TIPOS DE REFEIÇÃO */
 
-//importando o arquivo onde estão as rotas da tabela de genero
-const tipoRefeicaoRouter = require("./routes/tipo_refeicao_routes")
+//importando o arquivo onde estão as rotas da tabela dos tipos de refeição
+const tipoRefeicaoRouter = require("./routes/tipo_refeicao_routes.js")
 
 //definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
 app.use("/v1/baratie/tipo/refeicao", cors(), tipoRefeicaoRouter)
+
+
+
+
+/* SESSÃO DOS PUBLICOS ALVOS */
+
+//importando o arquivo onde estão as rotas do publico
+const publicoAlvoRouter = require("./routes/publico_alvo_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/publico/alvo", cors(), publicoAlvoRouter)
+
+
 
 
 
