@@ -7,7 +7,7 @@
  *********************************************************************************************************/
 
 //Import do arquivo de padronização de mensagens
-const message_config = require('../modulo/configMesssages.js')
+const message_config = require('../modulo/configMessages.js')
 
 //Import do arquivo DAO para fazer o CRUD de tipos de refeições no banco de dados
 const alimentoDAO = require('../../model/DAO/alimento/alimento.js')

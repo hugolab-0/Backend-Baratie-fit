@@ -19,35 +19,38 @@ const knexConex = knex(knexConfig.development);
 
 //Função para inserir dados na tabela de Refeição
 const insertRefeicao = async function(refeicao) {
-        try {
-            const sql = `insert into tbl_refeicao(
-                nome,
-                descricao,
-                modo_preparo,
-                apoio_decisao,
-                id_tipo_refeicao,
-                id_publico_alvo,
-                id_adm
-            ) values (
-                '${refeicao.nome}',
-                '${refeicao.descricao}',
-                '${refeicao.modo_preparo}',
-                '${refeicao.apoio_decisao}',
-                ${refeicao.id_tipo_refeicao},
-                ${refeicao.id_publico_alvo},
-                ${refeicao.id_adm}
-            );`;
+    try {
+        const sql = `insert into tbl_refeicao(
+            nome,
+            descricao,
+            modo_preparo,
+            apoio_decisao,
+            img,
+            id_tipo_refeicao,
+            id_publico_alvo,
+            id_adm
+        ) values (
+            '${refeicao.nome}',
+            '${refeicao.descricao}',
+            '${refeicao.modo_preparo}',
+            '${refeicao.apoio_decisao}',
+            '${refeicao.img}',
+            ${refeicao.id_tipo_refeicao},
+            ${refeicao.id_publico_alvo},
+            ${refeicao.id_adm}
+        );`;
 
-            const result = await knexConex.raw(sql);
+        const result = await knexConex.raw(sql);
 
-            if(result)
-                return result[0].insertId // Retorna o ID gerado no BD
-            else
-                return false
+        if(result)
+            return result[0].insertId
+        else
+            return false
 
-        } catch (error) {
-            
-        }
+    } catch (error) {
+        console.log(error) // ← adicione isso
+        return false
+    }
 }
 
 //Função para atualizar uma Refeição da tabela
@@ -61,6 +64,7 @@ const updateRefeicao = async function(refeicao) {
         descricao =                 '${refeicao.descricao}',
         modo_preparo =              '${refeicao.modo_preparo}',
         apoio_decisao =             '${refeicao.apoio_decisao}',
+        img =                       '${refeicao.img}',
         id_tipo_refeicao =          '${refeicao.id_tipo_refeicao}',
         id_publico_alvo =           '${refeicao.id_publico_alvo}',
         id_adm =                    '${refeicao.id_adm}'

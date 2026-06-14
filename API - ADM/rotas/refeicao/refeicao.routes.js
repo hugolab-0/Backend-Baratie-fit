@@ -11,7 +11,7 @@ const bodyParserJSON = bodyParser.json()
 
 const controllerRefeicao = require('../../controller/refeição/refeicao_controller.js')
 
-//Endpoint para cadastrar uma nova Refição
+//Endpoint para cadastrar uma nova Refeição
 router.post('/', bodyParserJSON, async function(request, response) {
     let dados = request.body
     let contentType = request.headers['content-type']

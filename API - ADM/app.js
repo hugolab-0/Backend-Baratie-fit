@@ -2,40 +2,24 @@
 // IMPORTAÇÃO DE DEPENDÊNCIAS
 // ======================================================================
 
-// Framework principal da API
 const express = require('express')
-
-// Permite requisições de diferentes origens (CORS)
 const cors = require('cors')
 
-
-
 // ======================================================================
-// IMPORTAÇÃO DOS CONTROLLERS
+// IMPORTAÇÃO DAS ROTAS
 // ======================================================================
 
-
-const controllerAlimento = require('./controller/alimento/alimento.js')
-
-const alimentoRoutes = require('./rotas/alimento.routes.js')
-
-const controllerRefeicao = require('./controller/refeição/refeicao_controller.js')
-
-const refeicaoRoutes = require('./rotas/refeicao/refeicao_rota.js')
+// FIX: removidos os imports de controllers daqui — controllers são importados pelas rotas, não pelo app.js
+const alimentoRoutes  = require('./rotas/alimento/alimento.routes.js')
+const refeicaoRoutes  = require('./rotas/refeicao/refeicao.routes.js')
 
 // ======================================================================
 // CONFIGURAÇÃO DA API
 // ======================================================================
 
-// Middleware para receber JSON
-//const bodyParserJSON = bodyParser.json()
-
-// Instância do Express
-const app = express()
-
-// Porta da aplicação
+const app  = express()
+app.use(express.json())
 const PORT = process.env.PORT || 8080
-
 
 // ======================================================================
 // CONFIGURAÇÃO DO CORS
@@ -47,22 +31,18 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization']
 }
 
-// Aplicação das permissões CORS
 app.use(cors(corsOptions))
 
+// ======================================================================
+// ENDPOINTS
+// ======================================================================
+
+app.use('/v1/baratiefit/alimento', alimentoRoutes)
+app.use('/v1/baratiefit/refeicao', refeicaoRoutes)
 
 // ======================================================================
-// ENDPOINTS - ALIMENTO
+// INICIALIZAÇÃO DO SERVIDOR
 // ======================================================================
-
-// Cadastrar filme
-app.use('/v1/baratiefit/alimento', cors(),  alimentoRoutes)
-
-
-app.use('/v1/baratiefit/refeicao', cors(), refeicaoRoutes)
-
-
-
 
 app.listen(PORT, function() {
     console.log(`Servidor rodando na porta ${PORT}`)

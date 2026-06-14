@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const bodyParserJSON = bodyParser.json()
 
 
-const controllerAlimento = require('../controller/alimento/alimento.js')
+const controllerAlimento = require('../../controller/alimento/alimento.js')
 
 //Endpoint para criar um alimento
 router.post('/', bodyParserJSON, async function(request, response) {
