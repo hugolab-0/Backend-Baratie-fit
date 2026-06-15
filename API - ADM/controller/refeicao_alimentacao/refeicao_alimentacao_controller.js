@@ -23,7 +23,7 @@ const inserirRefeicaoAlimentacao = async function (refeicaoAlimentacao, contentT
 
         let result = await refeicaoAlimentacaoDAO.insertRefeicaoAlimentacao(refeicaoAlimentacao);
 
-        if (result) {
+        if (result) {   
             refeicaoAlimentacao.id = result;
             message.DEFAULT_MESSAGE.status = message_config.SUCESS_CREATED_ITEM.status;
             message.DEFAULT_MESSAGE.status_code = message_config.SUCESS_CREATED_ITEM.status_code;
