@@ -188,9 +188,11 @@ insert into tbl_nivel_acesso(nivel)
 values
 ("Root"), ("Administrador"), ("Nutricionista"), ("Editor");
 
+INSERT INTO tbl_adm (nome, email, senha, ultimo_acesso, id_nivel_acesso)
+VALUES ('Administrador', 'admin@baratiefit.com', '123456', NOW(), 2);
+
 select * from tbl_nivel_acesso;
 
-select * from tbl_categoria_alimento where id = 7;
 
 select * from tbl_enquadramento;
 
@@ -228,23 +230,24 @@ alter table tbl_refeicao
         references tbl_adm(id);
  
 -- Adiciona a FK na tabela de adm e cria as relações
-alter table tbl_adm
-    add column id_nivel_acesso int not null,
-    add constraint FK_NIVEL_ACESSO_ADM
-        foreign key(id_nivel_acesso)
-        references tbl_nivel_acesso(id);
+ALTER TABLE tbl_adm
+    ADD COLUMN id_nivel_acesso INT NOT NULL DEFAULT 2,
+    ADD CONSTRAINT FK_NIVEL_ACESSO_ADM
+        FOREIGN KEY (id_nivel_acesso)
+        REFERENCES tbl_nivel_acesso(id);
 
         
 -- Adiciona as FK na tabela de refeição_alimento e faz as relações
 alter table tbl_refeicao_alimento
     add column id_refeicao int not null,
     add constraint FK_REFEICAO_REFEICAOALIMENTO
-        foreign 
-  references tbl_refeicao(id),
+        foreign key (id_refeicao)
+        references tbl_refeicao(id),
     add column id_alimento int not null,
     add constraint FK_ALIMENTO_REFEICAOALIMENTO
         foreign key(id_alimento)
         references tbl_alimento(id);
         
 ######### FIM #######
-######### FIM ##########
+
+DESCRIBE tbl_adm;
