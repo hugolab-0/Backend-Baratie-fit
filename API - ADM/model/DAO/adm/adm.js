@@ -58,7 +58,7 @@ const updateADM = async function(adm) {
         email =                     '${adm.email}',
         senha =                     '${adm.senha}',
         ultimo_acesso =             '${adm.ultimo_acesso}',
-        id_nivel_acesso =           '${adm.id_nivel_acesso}',
+        id_nivel_acesso =           '${adm.id_nivel_acesso}'
         where id =                   ${adm.id};`
 
         //Executa o script no BD

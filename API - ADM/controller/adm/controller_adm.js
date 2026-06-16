@@ -23,7 +23,7 @@ const inserirADM = async function (adm, contentType) {
             return message_config.ERROR_CONTENT_TYPE; // 415
         }
 
-        let validar = validarRefeicao(adm);
+        let validar = validarADM(adm);
  
         if (validar !== true) {
             return validar;
@@ -36,7 +36,7 @@ const inserirADM = async function (adm, contentType) {
             message.DEFAULT_MESSAGE.status = message_config.SUCESS_CREATED_ITEM.status;
             message.DEFAULT_MESSAGE.status_code = message_config.SUCESS_CREATED_ITEM.status_code;
             message.DEFAULT_MESSAGE.message = message_config.SUCESS_CREATED_ITEM.message;
-            message.DEFAULT_MESSAGE.response = id_adm;
+            message.DEFAULT_MESSAGE.response = adm;
  
             return message.DEFAULT_MESSAGE;
         } else {
@@ -216,11 +216,11 @@ const validarADM = function (adm) {
 };
  
 module.exports = {
-    inserirRefeicao,
-    atualizarRefeicao,
-    listarRefeicoes,
-    buscarRefeicao,
-    excluirRefeicao,
-    validarRefeicao
+  inserirADM,
+  atualizarADM,
+  listarADM,
+  buscarADM,
+  excluirADM,
+  validarADM
 };
  

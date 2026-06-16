@@ -10,8 +10,9 @@ const cors = require('cors')
 // ======================================================================
 
 // FIX: removidos os imports de controllers daqui — controllers são importados pelas rotas, não pelo app.js
-const alimentoRoutes  = require('./rotas/alimento/alimento.routes.js')
-const refeicaoRoutes  = require('./rotas/refeicao/refeicao.routes.js')
+const alimentoRoutes    = require('./rotas/alimento/alimento.routes.js')
+const refeicaoRoutes    = require('./rotas/refeicao/refeicao.routes.js')
+const ADMRoutes         = require('./rotas/adm/adm.routes.js')
 
 // ======================================================================
 // CONFIGURAÇÃO DA API
@@ -39,6 +40,7 @@ app.use(cors(corsOptions))
 
 app.use('/v1/baratiefit/alimento', alimentoRoutes)
 app.use('/v1/baratiefit/refeicao', refeicaoRoutes)
+app.use('/v1/baratiefit/adm', ADMRoutes)
 
 // ======================================================================
 // INICIALIZAÇÃO DO SERVIDOR
