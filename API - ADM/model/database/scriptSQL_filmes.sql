@@ -250,4 +250,55 @@ alter table tbl_refeicao_alimento
         
 ######### FIM #######
 
+select * from tbl_refeicao;
+
+INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
+VALUES (
+    'Frango Grelhado com Batata Doce',
+    'Refeição rica em proteínas e carboidratos complexos, ideal para ganho de massa muscular.',
+    'Tempere o frango com sal, alho e limão. Grelhe por 10 minutos de cada lado. Cozinhe a batata doce em cubos até ficar macia.',
+    'Alta proteína e carboidrato de baixo índice glicêmico. Indicado para pós-treino.',
+    'frango_batata_doce.jpg',
+    8,  -- Pós-Treino
+    2,  -- Hipertrofia
+    1
+);
+
+INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
+VALUES (
+    'Vitamina de Banana com Aveia',
+    'Bebida nutritiva e energética, perfeita para o café da manhã ou lanche rápido.',
+    'Bata no liquidificador 1 banana, 200ml de leite desnatado, 3 colheres de aveia e mel a gosto.',
+    'Fonte de carboidratos e fibras. Fornece energia gradual para o período da manhã.',
+    'vitamina_banana_aveia.jpg',
+    1,  -- Café da Manhã
+    1,  -- Emagrecimento
+    1
+);
+
+INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
+VALUES (
+    'Salada de Atum com Grão de Bico',
+    'Refeição leve e proteica, ideal para quem busca emagrecimento sem abrir mão da saciedade.',
+    'Misture atum escorrido, grão de bico cozido, tomate, cebola roxa e tempere com azeite e limão.',
+    'Baixo teor calórico com alto teor proteico. Indicado para dietas de restrição calórica.',
+    'salada_atum_grao_bico.jpg',
+    4,  -- Lanche da Tarde
+    1,  -- Emagrecimento
+    1
+);
+
+INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
+VALUES (
+    'Omelete de Claras com Espinafre',
+    'Refeição leve e rica em proteínas, ideal para o jantar sem pesar na digestão.',
+    'Bata 4 claras, adicione espinafre picado, sal e pimenta. Cozinhe em frigideira antiaderente por 5 minutos.',
+    'Baixo carboidrato e alta proteína. Indicado para quem treina e quer manter o peso.',
+    'omelete_claras_espinafre.jpg',
+    5,  -- Jantar
+    3,  -- Manutenção de Peso
+    1
+);
+
+
 DESCRIBE tbl_adm;
