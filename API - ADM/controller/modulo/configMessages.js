@@ -14,6 +14,7 @@ const DEFAULT_MESSAGE = {
     Version: '1.0.0.26',
     status: false,
     status_code: 0,
+    message: '',
     response: {}
 }
 
@@ -21,7 +22,8 @@ const DEFAULT_MESSAGE = {
 const ERROR_BAD_RESQUEST = {
     status: false,
     status_code: 400,
-    message: 'Os dados enviados na requisição não estão corretos.'
+    message: 'Os dados enviados na requisição não estão corretos.',
+    field: ''
 }
 
 const ERROR_INTERNAL_SERVER_MODEL = {
@@ -50,13 +52,13 @@ const ERROR_NOT_FOUND = {
 
 // Mensagens de sucesso da API
 const SUCESS_CREATED_ITEM = {
-    status: true, // CORRIGIDO (era "statu")
+    status: true,
     status_code: 201,
     message: 'Registro inserido com sucesso!'
 }
 
 const SUCESS_CREATED_ITEM_WARNING = {
-    status: true, // CORRIGIDO (era "statu")
+    status: true,
     status_code: 201,
     message: 'Os dados principais foram inseridos com sucesso, porém alguns apresentaram problema!'
 }
@@ -71,14 +73,14 @@ const SUCESS_RESPONSE = {
 const SUCESS_UPDATED_ITEM = {
     status: true,
     status_code: 200,
-    message: 'Registro atualizado com sucesso'
+    message: 'Registro atualizado com sucesso!'
 }
 
 // Retorno para DELETE
 const SUCESS_DELETED_ITEM = {
     status: true,
     status_code: 200,
-    message: 'Registro excluído com sucesso'
+    message: 'Registro excluído com sucesso!'
 }
 
 module.exports = {
