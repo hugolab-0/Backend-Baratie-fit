@@ -24,7 +24,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Refeição'          
            
         '404':
           description: Not Found
@@ -50,7 +50,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Refeição'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -72,7 +72,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Publico Alvo'          
            
         '404':
           description: Not Found
@@ -98,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Publico Alvo'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -120,7 +120,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Restrição'          
            
         '404':
           description: Not Found
@@ -146,7 +146,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Restrição'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -168,7 +168,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Categoria Alimento'          
            
         '404':
           description: Not Found
@@ -194,7 +194,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Categoria Alimento'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -216,7 +216,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Enquadramento'          
            
         '404':
           description: Not Found
@@ -242,7 +242,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Enquadramento'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -264,7 +264,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Nivel Acesso'          
            
         '404':
           description: Not Found
@@ -290,7 +290,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Nivel Acesso'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -312,7 +312,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Refeição'          
            
         '404':
           description: Not Found
@@ -338,7 +338,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Refeição'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -360,7 +360,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Alimento'          
            
         '404':
           description: Not Found
@@ -386,7 +386,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Alimento'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -408,7 +408,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Adm'          
            
         '404':
           description: Not Found
@@ -434,7 +434,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Adm'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -456,7 +456,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Refeição Alimento'          
            
         '404':
           description: Not Found
@@ -482,7 +482,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Refeição Alimento'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -504,7 +504,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'          
+                  $ref: '#/components/schemas/Refeição Restrição'          
            
         '404':
           description: Not Found
@@ -530,7 +530,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/Refeição Restrição'          
         '400':
           description: Invalid ID supplied
         '404':
@@ -552,32 +552,177 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Filme'
+                  $ref: '#/components/schemas/Help'
 
 components:
   schemas:
-    Filme:
+    Tipo Refeição:
       required:
+        - id
         - nome
-        - sinopse
       type: object
       properties:
         id:
           type: integer
         nome:
           type: string
-        sinopse:
-          type: string
-        data_lancamento:
-          type: string
-        duracao:
-          type: string
-        valor:
+
+    Publico Alvo:
+      required:
+        - id
+        - nome
+      type: object
+      properties:
+        id:
           type: integer
-        avaliacao:
-          type: integer
-        capa:
+        nome:
           type: string
+
+    Restrição:
+      required:
+        - id
+        - nome
+        - descricao
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+
+    Categoria Alimento:
+      required:
+        - id
+        - nome
+        - descricao
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+
+    Enquadramento:
+      required:
+        - id
+        - nome
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+
+    Nivel Acesso:
+      required:
+        - id
+        - nivel
+      type: object
+      properties:
+        id:
+          type: integer
+        nivel:
+          type: string
+
+    Refeição:
+      required:
+        - id
+        - nome
+        - tipoRefeicao
+        - publicoAlvo
+        - enquadramento
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        tipoRefeicao:
+          $ref: '#/components/schemas/Tipo Refeição'
+        publicoAlvo:
+          $ref: '#/components/schemas/Publico Alvo'
+        enquadramento:
+          $ref: '#/components/schemas/Enquadramento'
+
+      Alimento:
+        required:
+          - id
+          - nome
+          - categoriaAlimento
+        type: object
+        properties:
+          id:
+            type: integer
+          nome:
+            type: string
+          categoriaAlimento:
+            $ref: '#/components/schemas/Categoria Alimento'
+      Adm:
+        required:
+          - id
+          - nome
+          - email
+          - senha
+          - nivelAcesso
+        type: object
+        properties:
+          id:
+            type: integer
+          nome:
+            type: string
+          email:
+            type: string
+          senha:
+            type: string
+          nivelAcesso:
+            $ref: '#/components/schemas/Nivel Acesso'
+
+      Refeição Alimento:
+        required:
+          - id
+          - refeicao
+          - alimento
+        type: object
+        properties:
+          id:
+            type: integer
+          refeicao:
+            $ref: '#/components/schemas/Refeição'
+          alimento:
+            $ref: '#/components/schemas/Alimento'
+
+      Refeição Restrição:
+        required:
+          - id
+          - refeicao
+          - restricao
+        type: object
+        properties:
+          id:
+            type: integer
+          refeicao:
+            $ref: '#/components/schemas/Refeição'
+          restricao:
+            $ref: '#/components/schemas/Restrição'
+
+      Help:
+        required:
+          - id
+          - rota
+          - descricao
+        type: object
+        properties:
+          id:
+            type: integer
+          rota:
+            type: string
+          descricao:
+            type: string
+
   requestBodies:
     Filme:
       description: Objeto que deve ser enviado no Body das requisicoes
