@@ -17,7 +17,7 @@ const knexConfig = require('../../database_config_knex/knexFile');
 //Criar a conexão com o banco de dados MySQL
 const knexConex = knex(knexConfig.development);
 
-//Função para inserir dados na tabela de Refeição
+// Função para inserir uma nova Refeição
 const insertRefeicao = async function(refeicao) {
     try {
         const sql = `insert into tbl_refeicao(
@@ -29,58 +29,64 @@ const insertRefeicao = async function(refeicao) {
             id_tipo_refeicao,
             id_publico_alvo,
             id_adm
-        ) values (
-            '${refeicao.nome}',
-            '${refeicao.descricao}',
-            '${refeicao.modo_preparo}',
-            '${refeicao.apoio_decisao}',
-            '${refeicao.img}',
-            ${refeicao.id_tipo_refeicao},
-            ${refeicao.id_publico_alvo},
-            ${refeicao.id_adm}
-        );`;
-
-        const result = await knexConex.raw(sql);
-
-        if(result)
-            return result[0].insertId
+        ) values (?, ?, ?, ?, ?, ?, ?, ?);`;
+ 
+        const result = await knexConex.raw(sql, [
+            refeicao.nome,
+            refeicao.descricao,
+            refeicao.modo_preparo,
+            refeicao.apoio_decisao,
+            refeicao.img,
+            refeicao.id_tipo_refeicao,
+            refeicao.id_publico_alvo,
+            refeicao.id_adm
+        ]);
+ 
+        if (result)
+            return result[0].insertId;
         else
-            return false
-
+            return false;
+ 
     } catch (error) {
-        console.log(error) // ← adicione isso
-        return false
+        console.log(error);
+        return false;
     }
 }
 
-//Função para atualizar uma Refeição da tabela
+// Função para atualizar uma Refeição existente (inclusive a imagem)
 const updateRefeicao = async function(refeicao) {
-    
     try {
-        
-        //Script para atualizar um tipo de refeição já existente na tabela
-        let sql = `update tbl_refeicao set
-        nome =                      '${refeicao.nome}',
-        descricao =                 '${refeicao.descricao}',
-        modo_preparo =              '${refeicao.modo_preparo}',
-        apoio_decisao =             '${refeicao.apoio_decisao}',
-        img =                       '${refeicao.img}',
-        id_tipo_refeicao =          '${refeicao.id_tipo_refeicao}',
-        id_publico_alvo =           '${refeicao.id_publico_alvo}',
-        id_adm =                    '${refeicao.id_adm}'
-        where id =                   ${refeicao.id};`
-
-        //Executa o script no BD
-        let result = await knexConex.raw(sql)
-
-        if(result)
-            return true
-            else
-            return false
-
+        const sql = `update tbl_refeicao set
+            nome = ?,
+            descricao = ?,
+            modo_preparo = ?,
+            apoio_decisao = ?,
+            img = ?,
+            id_tipo_refeicao = ?,
+            id_publico_alvo = ?,
+            id_adm = ?
+        where id = ?;`;
+ 
+        const result = await knexConex.raw(sql, [
+            refeicao.nome,
+            refeicao.descricao,
+            refeicao.modo_preparo,
+            refeicao.apoio_decisao,
+            refeicao.img,
+            refeicao.id_tipo_refeicao,
+            refeicao.id_publico_alvo,
+            refeicao.id_adm,
+            refeicao.id
+        ]);
+ 
+        if (result)
+            return true;
+        else
+            return false;
+ 
     } catch (error) {
         console.log(error);
-        return false 
+        return false;
     }
 }
 

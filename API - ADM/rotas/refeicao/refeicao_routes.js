@@ -2,8 +2,13 @@
 // import do express
 const express = require('express')
 
+
 // cria um objeto de rota
 const router = express.Router()
+
+const path = require('path')
+
+const upload = require('../../uploads/middleware_upload.js')
 
 // Middleware para tratamento de JSON
 const bodyParser = require('body-parser')
@@ -11,10 +16,13 @@ const bodyParserJSON = bodyParser.json()
 
 const controllerRefeicao = require('../../controller/refeição/refeicao_controller.js')
 
-//Endpoint para cadastrar uma nova Refeição
-router.post('/', bodyParserJSON, async function(request, response) {
+//Endpoint para cadastrar uma nova Refeição (com upload de imagem)
+router.post('/', upload.single('img'), async function(request, response) {
     let dados = request.body
-    let contentType = request.headers['content-type']
+
+    if(request.file){
+        dados.img = request.file.filename
+    }
 
     let result = await controllerRefeicao.inserirRefeicao(dados, contentType)
 
@@ -44,17 +52,17 @@ router.get('/:id', async function(request, response) {
 })
 
 //Endepoint para atualizar uma Refeição
-router.put('/:id', bodyParserJSON, async function(request, response){
-
-    //Recebe o content-type da requisição
-    let contentType = request.headers['content-type']
-
-    let id = request.params.id
+router.put('/:id', upload.single('img'), async function(request, response){
 
     let dados = request.body
-
-    let result = await controllerRefeicao.atualizarRefeicao(dados, id, contentType)
-
+    dados.id = request.params.id
+ 
+    if (request.file) {
+        dados.img = request.file.filename
+    }
+ 
+    let result = await controllerRefeicao.atualizarRefeicao(dados)
+ 
     response.status(result.status_code)
     response.json(result)
     
