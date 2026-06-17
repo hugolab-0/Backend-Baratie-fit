@@ -121,6 +121,26 @@ app.use("/v1/baratie/alimento", cors(), alimentoRouter)
 
 
 
+/* SESSÃO DE ADMINISTRADOR */
+
+//importando o arquivo onde estão as rotas do nivel de acesso
+const admRouter = require("./routes/adm_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/adm", cors(), admRouter)
+
+
+
+/* SESSÃO DE REFEIÇÃO E ALIMENTO */
+
+//importando o arquivo onde estão as rotas do nivel de acesso
+const refeicaoAlimentoRouter = require("./routes/refeicao_alimento_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/refeicao/alimento", cors(), refeicaoAlimentoRouter)
+
+
+
 //iniciando a API para receber requisições
 app.listen(8080, function(){ //decidindo a porta para saída do conteúdo
     console.log("API funcionando e aguardando requisições...") //vai mostrar no terminal que a API já está funcionando
