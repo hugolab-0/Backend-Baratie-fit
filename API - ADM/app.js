@@ -3,6 +3,7 @@
 // ======================================================================
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 // ======================================================================
 // IMPORTAÇÃO DAS ROTAS
 // ======================================================================
@@ -39,6 +40,7 @@ app.use('/v1/baratiefit/alimento', alimentoRoutes)
 app.use('/v1/baratiefit/adm', ADMRoutes)
 app.use('/v1/baratiefit/refeicao/alimento', refeicaoAlimentoRoutes)
 app.use('/v1/baratiefit/refeicao', refeicaoRoutes)
+app.use('/uploads/refeicoes', express.static(path.join(__dirname, 'uploads', 'refeicoes')))
 
 // ======================================================================
 // INICIALIZAÇÃO DO SERVIDOR

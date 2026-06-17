@@ -4,14 +4,19 @@
 const multer = require('multer')
 const path = require('path')
 
+const fs = require('fs')
+
+const pastaDestino = path.join(__dirname, 'refeicoes')
+if (!fs.existsSync(pastaDestino)) {
+    fs.mkdirSync(pastaDestino, { recursive: true })
+}
+
 // Define onde e com qual nome o arquivo será salvo
 const storage = multer.diskStorage({
     destination: function (request, file, callback) {
-        // Pasta onde as imagens serão salvas 
-        callback(null, path.join(__dirname, '..', 'uploads', 'refeicoes'))
+        callback(null, path.join(__dirname, 'refeicoes'))
     },
     filename: function (request, file, callback) {
-        // Gera um nome único: timestamp + extensão original
         const extensao = path.extname(file.originalname)
         const nomeUnico = `refeicao_${Date.now()}${extensao}`
         callback(null, nomeUnico)

@@ -19,7 +19,7 @@ const inserirRefeicao = async function (refeicao, contentType) {
  
     try {
         
-        if (!String(contentType).includes('application/json')) {
+        if (!String(contentType).includes('application/json') && !String(contentType).includes('multipart/form-data')) {
             return message_config.ERROR_CONTENT_TYPE; // 415
         }
 
@@ -59,12 +59,12 @@ const atualizarRefeicao = async function (refeicao, id, contentType) {
     let message = JSON.parse(JSON.stringify(message_config));
  
     try {
-        if (String(contentType).includes('application/json')) {
+        if (String(contentType).includes('application/json') || String(contentType).includes('multipart/form-data')) {
  
             let resultBuscarID = await buscarRefeicao(id);
  
             if (resultBuscarID.status) {
-                let validar = validarRefeicao(refeicao);
+                let validar = validarRefeicao(refeicao, true)
  
                 if (validar !== true) {
                     return validar; // 400
@@ -135,9 +135,12 @@ const buscarRefeicao = async function (id) {
     let message = JSON.parse(JSON.stringify(message_config));
  
     try {
-        if (id === undefined || id === null || id === '' || isNaN(id)) {
-            message.ERROR_BAD_RESQUEST.field = '[ID] Inválido';
-            return message.ERROR_BAD_RESQUEST; // 400
+        if (id == undefined || id == null || id == '' || isNaN(id)) {
+            message.DEFAULT_MESSAGE.status = message_config.ERROR_BAD_RESQUEST.status
+            message.DEFAULT_MESSAGE.status_code = message_config.ERROR_BAD_RESQUEST.status_code
+            message.DEFAULT_MESSAGE.message = '[ID] Inválido'
+        
+            return message.DEFAULT_MESSAGE
         } else {
             let result = await refeicaoDAO.selectByIdRefeicao(id);
  
@@ -188,54 +191,93 @@ const excluirRefeicao = async function (id) {
 };
  
 //Função para validar os dados
-const validarRefeicao = function (refeicao) {
- 
+const validarRefeicao = function (refeicao, isUpdate = false) {
 
     let message = JSON.parse(JSON.stringify(message_config));
- 
-    if (refeicao.nome == '' || refeicao.nome == undefined || refeicao.nome.length > 100) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo nome é obrigatório e deve conter no máximo 100 caracteres.';
+
+    if (
+        refeicao.nome == '' ||
+        refeicao.nome == undefined ||
+        refeicao.nome.length > 100
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo nome é obrigatório e deve conter no máximo 100 caracteres.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.descricao == '' || refeicao.descricao == undefined || refeicao.descricao.length > 255) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo descrição é obrigatório e deve conter no máximo 255 caracteres.';
+
+    if (
+        refeicao.descricao == '' ||
+        refeicao.descricao == undefined ||
+        refeicao.descricao.length > 255
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo descrição é obrigatório e deve conter no máximo 255 caracteres.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.modo_preparo == '' || refeicao.modo_preparo == undefined || refeicao.modo_preparo.length > 255) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo modo de preparo é obrigatório e deve conter no máximo 255 caracteres.';
+
+    if (
+        refeicao.modo_preparo == '' ||
+        refeicao.modo_preparo == undefined ||
+        refeicao.modo_preparo.length > 255
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo modo de preparo é obrigatório e deve conter no máximo 255 caracteres.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.apoio_decisao == '' || refeicao.apoio_decisao == undefined || refeicao.apoio_decisao.length > 255) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo apoio à decisão é obrigatório e deve conter no máximo 255 caracteres.';
+
+    if (
+        refeicao.apoio_decisao == '' ||
+        refeicao.apoio_decisao == undefined ||
+        refeicao.apoio_decisao.length > 255
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo apoio à decisão é obrigatório e deve conter no máximo 255 caracteres.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    // FIX: validação de "img" estava incompleta (if sem corpo) — adicionada validação correta
-    if (refeicao.img == '' || refeicao.img == undefined) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo img é obrigatório.';
+
+    // A imagem é obrigatória apenas no cadastro
+    if (!isUpdate) {
+        if (refeicao.img == '' || refeicao.img == undefined) {
+            message.ERROR_BAD_RESQUEST.message =
+                'O campo img é obrigatório.';
+            return message.ERROR_BAD_RESQUEST;
+        }
+    }
+
+    if (
+        refeicao.id_tipo_refeicao == '' ||
+        refeicao.id_tipo_refeicao == undefined ||
+        isNaN(refeicao.id_tipo_refeicao)
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo id_tipo_refeicao é obrigatório e deve ser numérico.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.id_tipo_refeicao == '' || refeicao.id_tipo_refeicao == undefined) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo id_tipo_refeicao é obrigatório.';
+
+    if (
+        refeicao.id_publico_alvo == '' ||
+        refeicao.id_publico_alvo == undefined ||
+        isNaN(refeicao.id_publico_alvo)
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo id_publico_alvo é obrigatório e deve ser numérico.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.id_publico_alvo == '' || refeicao.id_publico_alvo == undefined) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo id_publico_alvo é obrigatório.';
+
+    if (
+        refeicao.id_adm == '' ||
+        refeicao.id_adm == undefined ||
+        isNaN(refeicao.id_adm)
+    ) {
+        message.ERROR_BAD_RESQUEST.message =
+            'O campo id_adm é obrigatório e deve ser numérico.';
         return message.ERROR_BAD_RESQUEST;
     }
- 
-    if (refeicao.id_adm == '' || refeicao.id_adm == undefined) {
-        message.ERROR_BAD_RESQUEST.message = 'O campo id_adm é obrigatório.';
-        return message.ERROR_BAD_RESQUEST;
-    }
- 
+
     return true;
 };
+
+
  
 module.exports = {
     inserirRefeicao,

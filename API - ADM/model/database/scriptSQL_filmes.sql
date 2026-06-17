@@ -1,8 +1,8 @@
 # Cria o database do projeto de baratiefit
-create database db_baratiefit_2028;
+create database db_baratiefit_2029;
 
 # Ativa o uso do database do produto
-use db_baratiefit_2028;
+use db_baratiefit_2029;
 
 #########   TABELAS CRUDS   #########
 -- Cria a tabela de alimento
@@ -29,6 +29,8 @@ create table tbl_refeicao(
     img varchar(255) not null
 );
 
+
+
 -- Cria a tabela de refeicao relacionada com alimento
 create table tbl_refeicao_alimento(
     id int not null primary key auto_increment,
@@ -43,24 +45,6 @@ create table tbl_adm(
     senha varchar(512) not null,
     ultimo_acesso datetime
 );
-
--- Insert da tabela de ADM
-insert into tbl_adm (
-    nome,
-    email,
-    senha,
-    ultimo_acesso,
-    id_nivel_acesso
-)
-values (
-    'Administrador',
-    'admin@baratiefit.com',
-    '123456',
-    now(),
-    2
-);
-
-select * from tbl_adm;
 
 #########   TABELAS DE DADOS ESTATICOS   #########
 -- Cria a tabela de tipo_refeicao
@@ -188,16 +172,50 @@ insert into tbl_nivel_acesso(nivel)
 values
 ("Root"), ("Administrador"), ("Nutricionista"), ("Editor");
 
-INSERT INTO tbl_adm (nome, email, senha, ultimo_acesso, id_nivel_acesso)
-VALUES ('Administrador', 'admin@baratiefit.com', '123456', NOW(), 2);
+#########   INSERÇÃO DE DADOS   #########
 
-select * from tbl_nivel_acesso;
+-- Insercao de dados na tabela de adm
+insert into tbl_adm(nome, email, senha, ultimo_acesso, id_nivel_acesso)
+values(	"admin",
+		"admin@gmail.com",
+        "admin",
+        "2026-06-17",
+        1
+        );
 
-
-select * from tbl_enquadramento;
-
-select * from tbl_adm;
-
+-- Inserção de dados na tabela de alimentos        
+insert into tbl_alimento(nome, descricao, proteinas_g, carboidratos_g, lipidios_g, fibras_g, acucar_adicionado_g, gorduras_trans_g, gorduras_saturadas_g, id_categoria, id_adm, id_enquadramento)
+values(	"Peito de frango cozido sem pele",
+		"Porção de 100 gramas de peito de frango cozido sem pele com temperos secos",
+		32,
+        1,
+		3,
+        0,
+        0,
+        0,
+        1,
+        3,
+        1,
+        10
+        );
+-- Inserção de dados na tabela de refeições
+insert into tbl_refeicao(nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
+values(	"A moda do Sanji",
+		"A moda do Sanji é uma refeição pensada em agilidade em dias corridos para gerar saciedade com alimentos nutritivos",
+		"Cozinhe o peito de frango por volta de 25 minutos em uma panela de pressão em fogo médio, logo após desfie-o e adicione temperos secos a gosto, dentre os quais chimichurri defumado, tempero baiano e páprica defumada",
+        "Uma ótima opção de alimento para gerar saciedade, com um alto teor de proteína e um baixo teor de gordura",
+        "https://swiftbr.vteximg.com.br/arquivos/ids/210980/621236-peito-de-frango-temperado-desfiado_rec.jpg?v=638943223429630000",
+        2,
+        2,
+        1
+        );
+        
+-- Inserção de dados na tabela de refeição_alimento
+insert into tbl_refeicao_alimento(id_refeicao, id_alimento, quantidade_g)
+values(	1,
+		1,
+        100
+        );
 #########   ALTER TABLES   #########   
 -- Adiciona a FK na tabela de alimento e cria as relacoes
 alter table tbl_alimento
@@ -230,75 +248,21 @@ alter table tbl_refeicao
         references tbl_adm(id);
  
 -- Adiciona a FK na tabela de adm e cria as relações
-ALTER TABLE tbl_adm
-    ADD COLUMN id_nivel_acesso INT NOT NULL DEFAULT 2,
-    ADD CONSTRAINT FK_NIVEL_ACESSO_ADM
-        FOREIGN KEY (id_nivel_acesso)
-        REFERENCES tbl_nivel_acesso(id);
-
+alter table tbl_adm
+    add column id_nivel_acesso int not null,
+    add constraint FK_NIVEL_ACESSO_ADM
+        foreign key(id_nivel_acesso)
+        references tbl_nivel_acesso(id);
         
 -- Adiciona as FK na tabela de refeição_alimento e faz as relações
 alter table tbl_refeicao_alimento
     add column id_refeicao int not null,
     add constraint FK_REFEICAO_REFEICAOALIMENTO
-        foreign key (id_refeicao)
+        foreign key(id_refeicao)
         references tbl_refeicao(id),
     add column id_alimento int not null,
     add constraint FK_ALIMENTO_REFEICAOALIMENTO
         foreign key(id_alimento)
         references tbl_alimento(id);
         
-######### FIM #######
-
-select * from tbl_refeicao;
-
-INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
-VALUES (
-    'Frango Grelhado com Batata Doce',
-    'Refeição rica em proteínas e carboidratos complexos, ideal para ganho de massa muscular.',
-    'Tempere o frango com sal, alho e limão. Grelhe por 10 minutos de cada lado. Cozinhe a batata doce em cubos até ficar macia.',
-    'Alta proteína e carboidrato de baixo índice glicêmico. Indicado para pós-treino.',
-    'frango_batata_doce.jpg',
-    8,  -- Pós-Treino
-    2,  -- Hipertrofia
-    1
-);
-
-INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
-VALUES (
-    'Vitamina de Banana com Aveia',
-    'Bebida nutritiva e energética, perfeita para o café da manhã ou lanche rápido.',
-    'Bata no liquidificador 1 banana, 200ml de leite desnatado, 3 colheres de aveia e mel a gosto.',
-    'Fonte de carboidratos e fibras. Fornece energia gradual para o período da manhã.',
-    'vitamina_banana_aveia.jpg',
-    1,  -- Café da Manhã
-    1,  -- Emagrecimento
-    1
-);
-
-INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
-VALUES (
-    'Salada de Atum com Grão de Bico',
-    'Refeição leve e proteica, ideal para quem busca emagrecimento sem abrir mão da saciedade.',
-    'Misture atum escorrido, grão de bico cozido, tomate, cebola roxa e tempere com azeite e limão.',
-    'Baixo teor calórico com alto teor proteico. Indicado para dietas de restrição calórica.',
-    'salada_atum_grao_bico.jpg',
-    4,  -- Lanche da Tarde
-    1,  -- Emagrecimento
-    1
-);
-
-INSERT INTO tbl_refeicao (nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
-VALUES (
-    'Omelete de Claras com Espinafre',
-    'Refeição leve e rica em proteínas, ideal para o jantar sem pesar na digestão.',
-    'Bata 4 claras, adicione espinafre picado, sal e pimenta. Cozinhe em frigideira antiaderente por 5 minutos.',
-    'Baixo carboidrato e alta proteína. Indicado para quem treina e quer manter o peso.',
-    'omelete_claras_espinafre.jpg',
-    5,  -- Jantar
-    3,  -- Manutenção de Peso
-    1
-);
-
-
-DESCRIBE tbl_adm;
+######### FIM #########
