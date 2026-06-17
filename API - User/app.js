@@ -151,6 +151,138 @@ app.use("/v1/baratie/refeicao/restricao", cors(), refeicaoRestricaoRouter)
 
 
 
+/* SESSÃO DE AJUDA (HELP) */
+
+//retorna os endPoints disponíveis e uma pequena descrição
+app.get("/v1/baratie/help", function(request, response){
+
+    //criando documentação auxiliar da API
+    let helpAPI = {
+        "API-description": "API para alimentar o site BaratieFit.",
+        "date": "2026-06-17",
+        "Development": "Lucas Dias Brandão Kolle",
+        "email": "lucaskolle2020@gmail.com",
+        "Version": "1.0.06.26",
+        "endPoints": [
+            {
+                "id": 1,
+                "Rota": "/v1/baratie/tipo/refeicao",
+                "Description": "Retorna todos os tipos de refeição cadastrados."
+            },
+            {
+                "id": 2,
+                "Rota": "/v1/baratie/tipo/refeicao/{id}",
+                "Description": "Retorna um tipo de refeição específico filtrando pelo ID."
+            },
+            {
+                "id": 3,
+                "Rota": "/v1/baratie/publico/alvo",
+                "Description": "Retorna todos os públicos-alvo cadastrados."
+            },
+            {
+                "id": 4,
+                "Rota": "/v1/baratie/publico/alvo/{id}",
+                "Description": "Retorna um público-alvo específico filtrando pelo ID."
+            },
+            {
+                "id": 5,
+                "Rota": "/v1/baratie/restricao",
+                "Description": "Retorna todas as restrições alimentares cadastradas."
+            },
+            {
+                "id": 6,
+                "Rota": "/v1/baratie/restricao/{id}",
+                "Description": "Retorna uma restrição alimentar específica filtrando pelo ID."
+            },
+            {
+                "id": 7,
+                "Rota": "/v1/baratie/categoria/alimento",
+                "Description": "Retorna todas as categorias de alimentos cadastradas."
+            },
+            {
+                "id": 8,
+                "Rota": "/v1/baratie/categoria/alimento/{id}",
+                "Description": "Retorna uma categoria de alimento específica filtrando pelo ID."
+            },
+            {
+                "id": 9,
+                "Rota": "/v1/baratie/enquadramento",
+                "Description": "Retorna todos os enquadramentos cadastrados."
+            },
+            {
+                "id": 10,
+                "Rota": "/v1/baratie/enquadramento/{id}",
+                "Description": "Retorna um enquadramento específico filtrando pelo ID."
+            },
+            {
+                "id": 11,
+                "Rota": "/v1/baratie/nivel/acesso",
+                "Description": "Retorna todos os níveis de acesso cadastrados."
+            },
+            {
+                "id": 12,
+                "Rota": "/v1/baratie/nivel/acesso/{id}",
+                "Description": "Retorna um nível de acesso específico filtrando pelo ID."
+            },
+            {
+                "id": 13,
+                "Rota": "/v1/baratie/refeicao",
+                "Description": "Retorna todas as refeições cadastradas."
+            },
+            {
+                "id": 14,
+                "Rota": "/v1/baratie/refeicao/{id}",
+                "Description": "Retorna uma refeição específica filtrando pelo ID."
+            },
+            {
+                "id": 15,
+                "Rota": "/v1/baratie/alimento",
+                "Description": "Retorna todos os alimentos cadastrados."
+            },
+            {
+                "id": 16,
+                "Rota": "/v1/baratie/alimento/{id}",
+                "Description": "Retorna um alimento específico filtrando pelo ID."
+            },
+            {
+                "id": 17,
+                "Rota": "/v1/baratie/adm",
+                "Description": "Retorna todos os administradores cadastrados."
+            },
+            {
+                "id": 18,
+                "Rota": "/v1/baratie/adm/{id}",
+                "Description": "Retorna um administrador específico filtrando pelo ID."
+            },
+            {
+                "id": 19,
+                "Rota": "/v1/baratie/refeicao/alimento",
+                "Description": "Retorna todos os relacionamentos entre refeições e alimentos."
+            },
+            {
+                "id": 20,
+                "Rota": "/v1/baratie/refeicao/alimento/{id}",
+                "Description": "Retorna um relacionamento específico entre refeição e alimento filtrando pelo ID."
+            },
+            {
+                "id": 21,
+                "Rota": "/v1/baratie/refeicao/restricao",
+                "Description": "Retorna todos os relacionamentos entre refeições e restrições alimentares."
+            },
+            {
+                "id": 22,
+                "Rota": "/v1/baratie/refeicao/restricao/{id}",
+                "Description": "Retorna um relacionamento específico entre refeição e restrição filtrando pelo ID."
+            }
+        ]
+    }
+
+    response.status(200)
+    response.json(helpAPI)
+})
+
+
+
 //iniciando a API para receber requisições
 app.listen(8080, function(){ //decidindo a porta para saída do conteúdo
     console.log("API funcionando e aguardando requisições...") //vai mostrar no terminal que a API já está funcionando
