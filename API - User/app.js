@@ -141,6 +141,16 @@ app.use("/v1/baratie/refeicao/alimento", cors(), refeicaoAlimentoRouter)
 
 
 
+/* SESSÃO DE REFEIÇÃO E RESTRICAO */
+
+//importando o arquivo onde estão as rotas do nivel de acesso
+const refeicaoRestricaoRouter = require("./routes/refeicao_restricao_routes.js")
+
+//definindo a rota para acessar as rotas do generoRouter (o cors() é para liberar o acesso a essa rota, caso contrário, o navegador bloqueia por questões de segurança)
+app.use("/v1/baratie/refeicao/restricao", cors(), refeicaoRestricaoRouter)
+
+
+
 //iniciando a API para receber requisições
 app.listen(8080, function(){ //decidindo a porta para saída do conteúdo
     console.log("API funcionando e aguardando requisições...") //vai mostrar no terminal que a API já está funcionando
