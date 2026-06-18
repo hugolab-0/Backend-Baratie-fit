@@ -1,9 +1,9 @@
-
 // Import das dependências
 const express = require('express')
 const router = express.Router()
 
-const upload = require('../../uploads/middleware_upload.js')
+const upload = require('../../controller/upload/controller_upload_multer_config.js')
+const uploadAzure = require('../../controller/upload/controller_upload_azure.js')
 const controllerRefeicao = require('../../controller/refeição/refeicao_controller.js')
 
 // =====================================
@@ -30,12 +30,23 @@ router.post(
             let dados = request.body
 
             if (request.file) {
-                dados.img = request.file.filename
+                let urlFile = await uploadAzure.uploadfiles(request.file)
+
+                if (urlFile) {
+                    dados.img = urlFile
+                } else {
+                    return response.status(500).json({
+                        status: false,
+                        status_code: 500,
+                        message: 'Falha ao enviar imagem para o Azure'
+                    })
+                }
             }
 
             let result = await controllerRefeicao.inserirRefeicao(
                 dados,
-                request.headers['content-type']
+                request.headers['content-type'],
+                request.file
             )
 
             response.status(result.status_code)
@@ -116,7 +127,17 @@ router.put(
             dados.id = request.params.id
 
             if (request.file) {
-                dados.img = request.file.filename
+                let urlFile = await uploadAzure.uploadfiles(request.file)
+
+                if (urlFile) {
+                    dados.img = urlFile
+                } else {
+                    return response.status(500).json({
+                        status: false,
+                        status_code: 500,
+                        message: 'Falha ao enviar imagem para o Azure'
+                    })
+                }
             }
 
             let result = await controllerRefeicao.atualizarRefeicao(
@@ -160,4 +181,3 @@ router.delete('/:id', async function(request, response) {
 })
 
 module.exports = router
-

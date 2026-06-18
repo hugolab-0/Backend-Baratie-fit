@@ -26,6 +26,13 @@ const ERROR_BAD_RESQUEST = {
     field: ''
 }
 
+const ERRO_UPLOAD_FILE = {
+    status: false,
+    status_code: 400,
+    message: 'Erro ao fazer o upload do aruivo[ERRO NA CONTROLLER]',
+    field: ''
+}
+
 const ERROR_INTERNAL_SERVER_MODEL = {
     status: false,
     status_code: 500,

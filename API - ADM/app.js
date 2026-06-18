@@ -1,13 +1,26 @@
 // ======================================================================
 // IMPORTAÇÃO DE DEPENDÊNCIAS
 // ======================================================================
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
+const express   = require('express')
+const cors      = require('cors')
+const multer    = require('multer')
+const path      = require('path')
+
+//Configuração para o multer enviar o arquivo de imagem
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/')
+    }
+})
+
+//Instância para criar um objeto upload
+const upload = multer()
+
 // ======================================================================
 // IMPORTAÇÃO DAS ROTAS
 // ======================================================================
 // FIX: removidos os imports de controllers daqui — controllers são importados pelas rotas, não pelo app.js
+
 const alimentoRoutes            = require('./rotas/alimento/alimento_routes.js')
 const refeicaoRoutes            = require('./rotas/refeicao/refeicao_routes.js')
 const ADMRoutes                 = require('./rotas/adm/adm.routes.js')
