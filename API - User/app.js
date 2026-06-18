@@ -273,6 +273,11 @@ app.get("/v1/baratie/help", function(request, response){
                 "id": 22,
                 "Rota": "/v1/baratie/refeicao/restricao/{id}",
                 "Description": "Retorna um relacionamento específico entre refeição e restrição filtrando pelo ID."
+            },
+            {
+                "id": 23,
+                "Rota": "/v1/baratie/help",
+                "Description": "Retorna a documentação da API com os endPoints disponíveis."
             }
         ]
     }

@@ -58,9 +58,29 @@ const selectByIdRefeicao = async function(id){
     }
 }
 
+//pesquisa uma refeição pelo nome
+const selectByNameRefeicao = async function(nome){
+    
+    try {
+        
+        let sql = `select * from tbl_refeicao where tbl_refeicao.nome like '%${nome}%'`
+
+        let result = await knexConex.raw(sql)
+
+        if(Array.isArray(result)){
+            return result[0]
+        }else{
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 
 //Exportando funções para serem utilizadas na controller
 module.exports = {
     selectAllRefeicao,
-    selectByIdRefeicao
+    selectByIdRefeicao,
+    selectByNameRefeicao
 }
