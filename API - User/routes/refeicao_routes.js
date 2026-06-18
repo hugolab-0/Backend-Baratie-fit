@@ -34,6 +34,20 @@ router.get("/", async function(request, response){
 
 })
 
+//pesquisar uma refeição pelo nome
+router.get("/pesquisar", bodyParserJSON, async function(request, response){
+
+    //recebendo o nome
+    let nomeRefeicao = request.body
+
+    //enviando para o banco
+    let result = await controllerRefeicao.buscarRefeicaoNome(nomeRefeicao.nome)
+
+    //enviando resposta
+    response.status(result.status_code)
+    response.json(result)
+})
+
 //buscasr uma refeição pelo id
 router.get("/:id", async function(request, response){
 
@@ -47,6 +61,7 @@ router.get("/:id", async function(request, response){
     response.status(result.status_code)
     response.json(result)
 })
+
 
 
 //exportando o router para ser utilizado no arquivo principal da API
