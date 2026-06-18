@@ -87,52 +87,79 @@ values
 
 -- Insercao de dados na tabela de adm
 insert into tbl_adm(nome, email, senha, ultimo_acesso, id_nivel_acesso)
-values(	"admin",
+values(	"admin 2",
 		"admin@gmail.com",
-        "admin",
-        "2026-06-17",
-        1
+        "admin2",
+        "2026-06-18",
+        2
         );
         
         
 
 -- Inserção de dados na tabela de alimentos        
-insert into tbl_alimento(nome, descricao, proteinas_g, carboidratos_g, lipidios_g, fibras_g, acucar_adicionado_g, gorduras_trans_g, gorduras_saturadas_g, id_categoria, id_adm, id_enquadramento)
-values(	"Peito de frango cozido sem pele",
-		"Porção de 100 gramas de peito de frango cozido sem pele com temperos secos",
-		32,
-        1,
-		3,
-        0,
-        0,
-        0,
-        1,
-        3,
-        2,
-        10
-        );
+insert into tbl_alimento (
+	nome,
+    descricao,
+    carboidratos_g,
+    proteinas_g,
+    lipidios_g,
+    fibras_g,
+    acucar_adicionado_g,
+    gorduras_trans_g,
+    gorduras_saturadas_g,
+    unidade_medida,
+    id_categoria,
+    id_adm,
+    id_enquadramento
+)
+values (
+	"batata",
+    "asdhaskdjaskdjh",
+    3,
+    5,
+    6,
+    10,
+    4,
+    2,
+    9,
+    "gramas",
+    1,
+    1,
+    1
+);
+
         
         
 
 -- Inserção de dados na tabela de refeições
-insert into tbl_refeicao(nome, descricao, modo_preparo, apoio_decisao, img, id_tipo_refeicao, id_publico_alvo, id_adm)
-values(	"A moda do Sanji",
-		"A moda do Sanji é uma refeição pensada em agilidade em dias corridos para gerar saciedade com alimentos nutritivos",
-		"Cozinhe o peito de frango por volta de 25 minutos em uma panela de pressão em fogo médio, logo após desfie-o e adicione temperos secos a gosto, dentre os quais chimichurri defumado, tempero baiano e páprica defumada",
-        "Uma ótima opção de alimento para gerar saciedade, com um alto teor de proteína e um baixo teor de gordura",
-        "https://swiftbr.vteximg.com.br/arquivos/ids/210980/621236-peito-de-frango-temperado-desfiado_rec.jpg?v=638943223429630000",
-        2,
-        2,
-        1
-        );
-        
-        
-        
--- Inserção de dados na tabela de refeição_alimento
-insert into tbl_refeicao_alimento(quantidade_g, unidade_medida, id_refeicao, id_alimento)
-values(	
-	100,
-    "gramas",
+insert into tbl_refeicao (
+	nome,
+    descricao,
+    modo_preparo,
+    apoio_decisao,
+    img,
+    id_tipo_refeicao,
+    id_publico_alvo,
+    id_adm
+)
+values (
+	"batata frita",
+    "ashasdjhaskjhk",
+    "asdjaslkjdalksjd",
+    "askldjaslkjdaklsj",
+    "https//asdasdasd",
+    1,
     1,
     1
+);
+
+
+
+insert into tbl_refeicao_restricao (
+	id_refeicao,
+    id_restricao
+)
+values (
+	1,
+    4
 );
