@@ -298,6 +298,15 @@ const validarRefeicaoAlimentacao = function (refeicaoAlimentacao) {
         message.field = 'id_alimento';
         return message;
     }
+    if (
+        refeicaoAlimentacao.unidade_medida == undefined ||
+        refeicaoAlimentacao.unidade_medida == null ||
+        refeicaoAlimentacao.length >= 20
+    ) {
+        message.field = 'unidade_medida';
+        return message;
+    }
+
 
     return true;
 }

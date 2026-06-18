@@ -32,6 +32,7 @@ const insertNewAlimento = async function(alimento) {
             acucar_adicionado_g,
             gorduras_trans_g,
             gorduras_saturadas_g,
+            unidade_medida,
             id_categoria,
             id_adm,
             id_enquadramento
@@ -46,6 +47,7 @@ const insertNewAlimento = async function(alimento) {
                 '${alimento.acucar_adicionado_g}',
                 '${alimento.gorduras_trans_g}',
                 '${alimento.gorduras_saturadas_g}',
+                '${alimento.unidade_medida}',
                 '${alimento.id_categoria}',
                 '${alimento.id_adm}',
                 '${alimento.id_enquadramento}'
@@ -82,6 +84,7 @@ const updateAlimento = async function(alimento) {
         acucar_adicionado_g =       '${alimento.acucar_adicionado_g}',
         gorduras_trans_g =          '${alimento.gorduras_trans_g}',
         gorduras_saturadas_g =      '${alimento.gorduras_saturadas_g}',
+        unidade_medida  =           '${alimento.unidade_medida}'
         id_categoria =              '${alimento.id_categoria}',
         id_adm =                    '${alimento.id_adm}',
         id_enquadramento =          '${alimento.id_enquadramento}'

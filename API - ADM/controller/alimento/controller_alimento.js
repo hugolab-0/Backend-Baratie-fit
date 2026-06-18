@@ -227,6 +227,7 @@ const validarDados = async function(alimento) {
             isNaN(Number(alimento.gorduras_trans_g)) || Number(alimento.gorduras_trans_g) < 0 ||
             alimento.gorduras_saturadas_g === undefined || alimento.gorduras_saturadas_g === '' || alimento.gorduras_saturadas_g === null || 
             isNaN(Number(alimento.gorduras_saturadas_g)) || Number(alimento.gorduras_saturadas_g) < 0 ||
+            alimento.id_categoria == undefined || alimento.id_categoria == '' || alimento.id_categoria == null ||
             alimento.id_categoria == undefined || alimento.id_categoria == '' || alimento.id_categoria == null || isNaN(Number(alimento.id_categoria)) ||
             alimento.id_adm == undefined || alimento.id_adm == '' || alimento.id_adm == null || isNaN(Number(alimento.id_adm)) ||
             alimento.id_enquadramento == undefined || alimento.id_enquadramento == '' || alimento.id_enquadramento == null ||

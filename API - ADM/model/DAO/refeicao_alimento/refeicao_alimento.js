@@ -24,13 +24,15 @@ const insertRefeicaoAlimento = async function(refeicaoAlimento) {
         const sql = `insert into tbl_refeicao_alimento(
             quantidade_g,
             id_refeicao,
-            id_alimento
-        ) values (?, ?, ?);`;
+            id_alimento,
+            unidade_medida
+        ) values (?, ?, ?, ?);`;
 
         const result = await knexConex.raw(sql, [
             refeicaoAlimento.quantidade_g,
             refeicaoAlimento.id_refeicao,
-            refeicaoAlimento.id_alimento
+            refeicaoAlimento.id_alimento,
+            refeicaoAlimento.unidade_medida
         ]);
 
         if (result)
@@ -104,13 +106,15 @@ const updateRefeicaoAlimento = async function(refeicaoAlimento) {
         let sql = `update tbl_refeicao_alimento
                     set quantidade_g = ?,
                         id_refeicao = ?,
-                        id_alimento = ?
+                        id_alimento = ?,
+                        unidade_medida = ?
                     where id = ?`;
 
         let result = await knexConex.raw(sql, [
             refeicaoAlimento.quantidade_g,
             refeicaoAlimento.id_refeicao,
             refeicaoAlimento.id_alimento,
+            refeicaoAlimento.unidade_medida,
             refeicaoAlimento.id
         ]);
 
