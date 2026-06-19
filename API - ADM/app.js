@@ -26,6 +26,11 @@ const refeicaoRoutes            = require('./rotas/refeicao/refeicao_routes.js')
 const ADMRoutes                 = require('./rotas/adm/adm.routes.js')
 const refeicaoAlimentoRoutes    = require('./rotas/refeicao_alimento/refeicao_alimento.routes.js')
 
+// Rotas de dados estáticos (somente listagem)
+const tipoRefeicaoRoutes        = require('./rotas/tipo_refeicao/tipo_refeicao_routes.js')
+const publicoAlvoRoutes         = require('./rotas/publico_alvo/publico_alvo_routes.js')
+const restricaoRoutes           = require('./rotas/restricao/restricao_routes.js')
+
 // ======================================================================
 // CONFIGURAÇÃO DA API
 // ======================================================================
@@ -53,6 +58,9 @@ app.use('/v1/baratiefit/alimento', alimentoRoutes)
 app.use('/v1/baratiefit/adm', ADMRoutes)
 app.use('/v1/baratiefit/refeicao/alimento', refeicaoAlimentoRoutes)
 app.use('/v1/baratiefit/refeicao', refeicaoRoutes)
+app.use('/v1/baratiefit/tipo_refeicao', tipoRefeicaoRoutes)
+app.use('/v1/baratiefit/publico_alvo', publicoAlvoRoutes)
+app.use('/v1/baratiefit/restricao', restricaoRoutes)
 app.use('/uploads/refeicoes', express.static(path.join(__dirname, 'uploads', 'refeicoes')))
 
 // ======================================================================
