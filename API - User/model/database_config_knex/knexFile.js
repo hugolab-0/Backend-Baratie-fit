@@ -6,7 +6,11 @@ module.exports = {
       host: 'localhost',
       user: 'root', // Substitua pelo seu usuário
       password: 'bcd127', // Substitua pela sua senha
+<<<<<<< HEAD
       database: 'db_baratiefit_2028', // Substitua pelo nome do seu banco de dados
+=======
+      database: 'db_baratiefit_2029', // Substitua pelo nome do seu banco de dados
+>>>>>>> 5262a10a9630ef1e1d5a6a5b759b2582447f8194
       port: 3306, // Porta padrão do MySQL
      
       // Opcional: Define charset (recomendado para UTF8)
