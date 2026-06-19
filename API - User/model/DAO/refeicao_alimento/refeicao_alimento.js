@@ -58,6 +58,16 @@ const selectByIdRefeicaoAlimento = async function(id){
     }
 }
 
+//Retorna as refeições filtradas pelo id do alimento
+const selectRefeicaoByIdAlimento = function(idAlimento){
+
+}
+
+//Retorna as refeições filtradas pelo id da refeição
+const selectAlimentoByIdRefeicao = function(idRefeicao){
+
+}
+
 
 //Exportando funções para serem utilizadas na controller
 module.exports = {
