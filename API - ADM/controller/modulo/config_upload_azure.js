@@ -1,6 +1,6 @@
 //Criação das contantes de configuração da AZURE
 
-const TOKEN       = 'sp=racw&st=2026-06-18T02:48:00Z&se=2026-06-18T10:00:00Z&sv=2026-02-06&sr=c&sig=9wV7M6%2BZrWrve7tV%2BYQ0Lfi%2F%2Ff6bNEflypLb1%2F22yLI%3D'
+const TOKEN       = 'sp=racw&st=2026-06-18T11:25:41Z&se=2026-06-26T19:40:41Z&spr=https&sv=2026-02-06&sr=c&sig=YHAPRhBCh3X%2BBDWj7juA4ap5lVZ5ufzB8bWu4Jv2GcA%3D'
 const ACCOUNT     = 'uploadrefeicao'
 const CONTAINER   = 'uploadrefeicao'
 

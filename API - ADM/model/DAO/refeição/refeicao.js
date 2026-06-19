@@ -140,17 +140,21 @@ const selectByIdRefeicao = async function(id) {
 //Função para excluir uma refeição pelo ID
 const deleteRefeicao = async function(id) {
     try {
-        let sql = `delete from tbl_refeicao where id = ${id}`
-    
-        let result = await knexConex.raw(sql)
-        
-        if(result){
+        // Remove primeiro os vínculos filhos
+        await knexConex('tbl_refeicao_alimento').where('id_refeicao', id).del()
+        await knexConex('tbl_refeicao_restricao').where('id_refeicao', id).del()
+
+        // Agora pode deletar a refeição
+        let result = await knexConex('tbl_refeicao').where('id', id).del()
+
+        if (result) {
             return true
-        }else{
+        } else {
             return false
         }
-        
+
     } catch (error) {
+        console.log('Erro ao deletar refeição:', error)
         return false
     }
 }

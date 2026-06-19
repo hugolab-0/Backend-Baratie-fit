@@ -100,8 +100,54 @@ const buscarRefeicao = async function(id){
     }
 }
 
+//pesquisa uma refeição pelo nome
+const buscarRefeicaoNome = async function(nome){
+
+    //clonando a variável de mensagens para não modificar a original
+    let message = JSON.parse(JSON.stringify(config_message))
+    //JSON.stringify(config_message) -> transforma o Json em string
+    //JSON.parse -> transforma de volta em Json
+
+    try {
+        //tratando o nome, para não mandar conteúdos errados pro banco
+        if(nome == undefined || nome == "" || nome == null){
+            message.ERROR_BAD_REQUEST.field = "ERRO! O NOME enviado está incorreto."
+            return message.ERROR_BAD_REQUEST //400
+        
+        //se o nome estiver no formato correto ele ennvia pro DAO
+        }else{
+            let result = await refeicaoDAO.selectByNameRefeicao(nome) //enviando o id pro DAO concluir o script
+
+            //se o resultado estiver algo ele continua o programa
+            if(result){
+
+                //se o resultado for um ARRAY maior do que zero
+                if(result.length > 0){
+
+                    //editando cabeçalho
+                    message.DEFAULT_MESSAGE.status = message.SUCESS_RESPONSE.status
+                    message.DEFAULT_MESSAGE.status_code = message.SUCESS_RESPONSE.status_code
+                    message.DEFAULT_MESSAGE.response.refeicao = result
+
+                    return message.DEFAULT_MESSAGE //200
+                }else{
+                    return message.ERROR_NOT_FOUND //404
+                }
+
+            }else{
+                return message.ERROR_INTERNAL_SERVER_MODEL //500 (model)
+            }
+
+        }
+        
+    } catch (error) {
+        return message.ERROR_INTERNAL_SERVER_CONTROLLER //500 (controller)
+    }
+}
+
 /* EXPORTANDO FUNÇÕES */
 module.exports = {
     listarRefeicao,
-    buscarRefeicao
+    buscarRefeicao,
+    buscarRefeicaoNome
 }
