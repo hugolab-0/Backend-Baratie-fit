@@ -35,6 +35,7 @@ const selectAllRefeicao = async function(){
             return false
         }
     } catch (error) {
+        console.log(error)
         return false
     }
 }
@@ -73,6 +74,7 @@ const selectByNameRefeicao = async function(nome){
             return false
         }
     } catch (error) {
+        console.log(error)
         return false
     }
 }
